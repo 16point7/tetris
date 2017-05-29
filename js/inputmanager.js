@@ -8,10 +8,12 @@ function InputManager() {
     
 }
 
+/* Store the game-related keycodes to listen for */
 InputManager.prototype.setKeyMap = function(keyMap) {
     this.km = keyMap;
 }
 
+/* Defines the comm pipeline to take when a relavent event is captured */
 InputManager.prototype.register = function(event, callback) {
     switch(event) {
         case 'action':      this.notify = callback;     break;
@@ -22,10 +24,12 @@ InputManager.prototype.register = function(event, callback) {
     }
 }
 
+/* Register the event filter with the browser */
 InputManager.prototype.listen = function() {
     document.addEventListener('keydown', this.keyHandler.bind(this));
 }
 
+/* The filter to use to get only game-related events */
 InputManager.prototype.keyHandler = function(e) {
     switch(e.keyCode) {
         case this.km.LEFT:
