@@ -6,6 +6,9 @@ function Engine(InputManager, GraphicsManager, Tetris, Queue, config) {
     this.cf = config;
 
     this.moves = new Queue(32);
+
+    this.activeGame;
+    this.loopId;
     this.prev;
 
     this.setup();
@@ -40,28 +43,42 @@ Engine.prototype.loop = function(time) {
 
 /* Pipeline for gameplay events to flow from KeyboardManager to Engine */
 Engine.prototype.action = function(e) {    
-    this.moves.push(e);
+    if (this.loopId != null)
+        this.moves.push(e);
     console.log('Engine.action()');
 }
 
 /* Pipeline for new game event to flow from KeyboardManager to Engine */
 Engine.prototype.newGame = function() {
-    this.tt.newState();
-    this.gm.newState();
-    this.startLoop();
+    if (!this.activeGame) {
+        this.tt.newState();
+        this.gm.newState();
+        this.resetInputQueue();
+        this.activeGame = true;
+        this.startLoop();        
+    }
     console.log('Engine.newGame()');
 }
 
 /* Pipeline for pause game event to flow from KeyboardManager to Engine */
 Engine.prototype.pauseGame = function() {
+    if (this.activeGame) {
+        if (this.loopId == null)
+            this.startLoop();
+        else
+            this.endLoop();
+    }
     console.log('Engine.pauseGame()');
 }
 
 /* Pipeline for end game event to flow from KeyboardManager to Engine */
 Engine.prototype.endGame = function() {
-    this.tt.endState();
-    this.gm.endState();
-    this.endLoop();
+    if (this.activeGame) {
+        this.tt.endState();
+        this.gm.endState();
+        this.endLoop();
+        this.activeGame = false;        
+    }
     console.log('Engine.endGame()');
 }
 
@@ -69,11 +86,18 @@ Engine.prototype.endGame = function() {
 Engine.prototype.startLoop = function() {
     this.prev = window.performance.now();
     this.loopId = this.loop(this.prev);
+    this.activeGame = true;
     console.log('Engine.launchGame()');
 }
 
 /* Stops the event loop */
 Engine.prototype.endLoop = function() {
     cancelAnimationFrame(this.loopId);
+    this.loopId = null;
     console.log('Engine.endLoop()');
+}
+
+/* Clear the game input queue */
+Engine.prototype.resetInputQueue = function() {
+    this.moves.clear();
 }
