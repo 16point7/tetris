@@ -12,8 +12,8 @@ InputManager.prototype.setKeyMap = function(keyMap) {
     this.km = keyMap;
 }
 
-InputManager.prototype.register = function(callback) {
-    switch(callback) {
+InputManager.prototype.register = function(event, callback) {
+    switch(event) {
         case 'action':      this.notify = callback;     break;
         case 'newgame':     this.newGame = callback;    break;
         case 'quitgame':    this.quitGame = callback;   break;
