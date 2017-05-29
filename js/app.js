@@ -11,7 +11,10 @@ window.onload = function() {
             PAUSE:80,
             QUIT:81
         },
-        containerId:'zone'    
+        containerId:'zone',
+        tetris: {
+            initialDropRate: 500
+        }           
     };
     window.game = new Engine(InputManager, GraphicsManager, Tetris, Queue, config);
 }
