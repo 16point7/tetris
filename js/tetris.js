@@ -7,6 +7,7 @@ function Tetris() {
 /* Store the default game configurations */
 Tetris.prototype.setConfig = function(config) {
     this.cf = config;
+    console.log('Tetris.setConfig()');
 }
 
 /* Update the gamestate based on user input and elapsed time */
@@ -26,4 +27,10 @@ Tetris.prototype.update = function(moves, delta) {
 Tetris.prototype.newState = function() {
     this.accu = 0;
     this.threshold = this.cf.initialDropRate;
+    console.log('Tetris.newState()');
+}
+
+/* Clean-up duties to perform when ending a game */
+Tetris.prototype.endState = function() {
+    console.log('Tetris.endState()');
 }

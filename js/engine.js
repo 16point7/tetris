@@ -26,6 +26,7 @@ Engine.prototype.setup = function() {
     this.tt.setConfig(this.cf.tetris);
 
     this.loop = this.loop.bind(this);
+    console.log('Engine.setup()');
 }
 
 /* Things to do in every frame */
@@ -34,20 +35,20 @@ Engine.prototype.loop = function(time) {
     this.tt.update(this.moves, delta);
     this.gm.render(this.tt.data, delta);
     this.prev = time;
-    requestAnimationFrame(this.loop);
+    this.loopId = requestAnimationFrame(this.loop);
 }
 
 /* Pipeline for gameplay events to flow from KeyboardManager to Engine */
-Engine.prototype.action = function(e) {
-    console.log('Engine.action()');
+Engine.prototype.action = function(e) {    
     this.moves.push(e);
+    console.log('Engine.action()');
 }
 
 /* Pipeline for new game event to flow from KeyboardManager to Engine */
 Engine.prototype.newGame = function() {
     this.tt.newState();
     this.gm.newState();
-    this.launchGame();
+    this.startLoop();
     console.log('Engine.newGame()');
 }
 
@@ -58,11 +59,21 @@ Engine.prototype.pauseGame = function() {
 
 /* Pipeline for end game event to flow from KeyboardManager to Engine */
 Engine.prototype.endGame = function() {
+    this.tt.endState();
+    this.gm.endState();
+    this.endLoop();
     console.log('Engine.endGame()');
 }
 
 /* Kicks off the event loop */
-Engine.prototype.launchGame = function() {
+Engine.prototype.startLoop = function() {
     this.prev = window.performance.now();
-    this.loop(this.prev);
+    this.loopId = this.loop(this.prev);
+    console.log('Engine.launchGame()');
+}
+
+/* Stops the event loop */
+Engine.prototype.endLoop = function() {
+    cancelAnimationFrame(this.loopId);
+    console.log('Engine.endLoop()');
 }
