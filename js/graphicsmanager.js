@@ -3,7 +3,6 @@ function GraphicsManager() {
 }
 
 GraphicsManager.prototype.setContainer = function(containerId) {
-    console.log(containerId);
     this.div = document.getElementById(containerId);
 }
 
