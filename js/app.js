@@ -13,5 +13,5 @@ window.onload = function() {
         },
         containerId:'zone'    
     };
-    window.game = new Engine(InputManager, GraphicsManager, Tetris, config);
+    window.game = new Engine(InputManager, GraphicsManager, Tetris, Queue, config);
 }
