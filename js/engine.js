@@ -7,9 +7,9 @@ function Engine(InputManager, GraphicsManager, Tetris, Queue, config) {
 
     this.moves = new Queue(32);
 
-    this.activeGame;
-    this.loopId;
-    this.prev;
+    this.activeGame;        // boolean
+    this.loopId;            // id of a running loop
+    this.prev;              // start time of the previous frame
 
     this.setup();
 }
@@ -28,11 +28,11 @@ Engine.prototype.setup = function() {
 
     this.tt.setConfig(this.cf.tetris);
 
-    this.loop = this.loop.bind(this);
+    this.loop = this.loop.bind(this);   // so RAF has access to this
     console.log('Engine.setup()');
 }
 
-/* Things to do in every frame */
+/* Game Loop */
 Engine.prototype.loop = function(time) {
     var delta = time - this.prev;
     this.tt.update(this.moves, delta);
@@ -41,26 +41,25 @@ Engine.prototype.loop = function(time) {
     this.loopId = requestAnimationFrame(this.loop);
 }
 
-/* Pipeline for gameplay events to flow from KeyboardManager to Engine */
+/* Callback for action events */
 Engine.prototype.action = function(e) {    
     if (this.loopId != null)
         this.moves.push(e);
     console.log('Engine.action()');
 }
 
-/* Pipeline for new game event to flow from KeyboardManager to Engine */
+/* Callback for new game event */
 Engine.prototype.newGame = function() {
     if (!this.activeGame) {
         this.tt.newState();
         this.gm.newState();
         this.resetInputQueue();
-        this.activeGame = true;
         this.startLoop();        
     }
     console.log('Engine.newGame()');
 }
 
-/* Pipeline for pause game event to flow from KeyboardManager to Engine */
+/* Callback for pause game event */
 Engine.prototype.pauseGame = function() {
     if (this.activeGame) {
         if (this.loopId == null)
@@ -71,7 +70,7 @@ Engine.prototype.pauseGame = function() {
     console.log('Engine.pauseGame()');
 }
 
-/* Pipeline for end game event to flow from KeyboardManager to Engine */
+/* Callback for end game event */
 Engine.prototype.endGame = function() {
     if (this.activeGame) {
         this.tt.endState();
@@ -82,7 +81,7 @@ Engine.prototype.endGame = function() {
     console.log('Engine.endGame()');
 }
 
-/* Kicks off the event loop */
+/* Kicks off the game loop */
 Engine.prototype.startLoop = function() {
     this.prev = window.performance.now();
     this.loopId = this.loop(this.prev);
@@ -90,14 +89,14 @@ Engine.prototype.startLoop = function() {
     console.log('Engine.launchGame()');
 }
 
-/* Stops the event loop */
+/* Stops the game loop */
 Engine.prototype.endLoop = function() {
     cancelAnimationFrame(this.loopId);
     this.loopId = null;
     console.log('Engine.endLoop()');
 }
 
-/* Clear the game input queue */
+/* Clears the input queue */
 Engine.prototype.resetInputQueue = function() {
     this.moves.clear();
 }

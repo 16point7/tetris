@@ -1,5 +1,5 @@
 function GraphicsManager() {
-    this.div;
+    this.div;       // DOM object to house the game
 }
 
 /* Defines location to inject the canvases */

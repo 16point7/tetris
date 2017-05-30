@@ -1,37 +1,44 @@
 function InputManager() {
-    this.km;
-
-    this.notify;
-    this.newGame;
-    this.quitGame;
-    this.pauseGame;
+    this.km;            // key map
+    this.notify;        // callback for game action key event
+    this.newGame;       // callback for new game key event
+    this.quitGame;      // callback for quit key event
+    this.pauseGame;     // callback for pause key event
     
 }
 
-/* Store the game-related keycodes to listen for */
+/* Defines the game-related inputs */
 InputManager.prototype.setKeyMap = function(keyMap) {
     this.km = keyMap;
     console.log('InputManager.setKeyMap()');
 }
 
-/* Defines the comm pipeline to take when a relavent event is captured */
+/* Used to register callbacks for game-related events */
 InputManager.prototype.register = function(event, callback) {
     switch(event) {
-        case 'action':      this.notify = callback;     break;
-        case 'newgame':     this.newGame = callback;    break;
-        case 'quitgame':    this.quitGame = callback;   break;
-        case 'pausegame':   this.pauseGame = callback;  break;        
+        case 'action':
+            this.notify = callback;     
+            break;
+        case 'newgame':
+            this.newGame = callback;
+            break;
+        case 'quitgame':
+            this.quitGame = callback;
+            break;
+        case 'pausegame':
+            this.pauseGame = callback;
+            break;
     }
     console.log('InputManager.register()');
 }
 
-/* Register the event filter with the browser */
+/* Registers the event filter with the browser. */
 InputManager.prototype.listen = function() {
     document.addEventListener('keydown', this.keyHandler.bind(this));
     console.log('InputManager.listen()');
 }
 
-/* The filter to use to get only game-related events */
+/* Filter which is used to catch and dispatch game-related events. */
 InputManager.prototype.keyHandler = function(e) {
     switch(e.keyCode) {
         case this.km.LEFT:

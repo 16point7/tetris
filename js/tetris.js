@@ -4,13 +4,13 @@ function Tetris() {
     this.treshold;
 }
 
-/* Store the default game configurations */
+/* Stores the default configurations */
 Tetris.prototype.setConfig = function(config) {
     this.cf = config;
     console.log('Tetris.setConfig()');
 }
 
-/* Update the gamestate based on user input and elapsed time */
+/* Updates the gamestate based on player inputs and elapsed time */
 Tetris.prototype.update = function(moves, delta) {
     while(moves.size() > 0) {
         console.log('Tetris.update(): ' + moves.pop());
@@ -23,7 +23,7 @@ Tetris.prototype.update = function(moves, delta) {
     }
 }
 
-/* Renew the gamestate variables */
+/* Resets all game-state values */
 Tetris.prototype.newState = function() {
     this.accu = 0;
     this.threshold = this.cf.initialDropRate;
