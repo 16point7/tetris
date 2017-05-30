@@ -1,7 +1,7 @@
 function Tetris() {
     this.cf;
-    this.accu;
     this.treshold;
+    this.accumulator;   // for drop timing (ms)
 }
 
 /* Stores the default configurations */
@@ -16,16 +16,16 @@ Tetris.prototype.update = function(moves, delta) {
         console.log('Tetris.update(): ' + moves.pop());
     }
 
-    this.accu = this.accu + delta;
-    while (this.accu > this.threshold) {
+    this.accumulator = this.accumulator + delta;
+    while (this.accumulator > this.threshold) {
         console.log('Tetris.update(): drop!');
-        this.accu = this.accu - this.threshold;
+        this.accumulator = this.accumulator - this.threshold;
     }
 }
 
 /* Resets all game-state values */
 Tetris.prototype.newState = function() {
-    this.accu = 0;
+    this.accumulator = 0;
     this.threshold = this.cf.initialDropRate;
     console.log('Tetris.newState()');
 }
