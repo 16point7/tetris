@@ -6,7 +6,7 @@ function Tetris() {
     this.piece1;        // active piece
     this.piece2;        // next piece (for display)
     this.board;         // 1-D unsigned, 16-bit array
-    this.data           // export data (for GraphicsManager)
+    this.data;          // export data (for GraphicsManager)
     this.bag;           // randomized grab-bag of tetris pieces
     this.gameOver;      // boolean
     this.notifyEnd;     // callback to notify engine of ended game
@@ -240,7 +240,7 @@ Tetris.prototype.loadPieces = function() {
 
     this.piece1.j = this.START_J;
     this.piece1.i = this.START_I;
-    this.rIdx = 0;
+    this.piece1.rIdx = 0;
 
     this.recordPiece1Update();
     this.recordPiece2Update();
