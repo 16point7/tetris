@@ -27,6 +27,7 @@ Engine.prototype.setup = function() {
     this.gm.initialize();
 
     this.tt.setConfig(this.cf.tetris);
+    this.tt.register('gameover', this.endGame.bind(this));
 
     this.loop = this.loop.bind(this);   // so RAF has access to this
 }

@@ -10,11 +10,14 @@ Tetris.prototype.setConfig = function(config) {
     console.log('Tetris.setConfig()');
 }
 
-/* Updates the gamestate based on player inputs and elapsed time */
-Tetris.prototype.update = function(moves, delta) {
-    while(moves.size() > 0) {
-        console.log('Tetris.update(): ' + moves.pop());
+/* Registers callbacks for game-related events */
+Tetris.prototype.register = function(event, callback) {
+    switch(event) {
+        case 'gameover':
+            this.notifyEnd = callback;
+            break;
     }
+}
 
     this.accumulator = this.accumulator + delta;
     while (this.accumulator > this.threshold) {
