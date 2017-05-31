@@ -20,7 +20,6 @@ window.onload = function() {
                 height: 24
             }           
     };
-    window.console.lag = window.console.log;
-    window.console.log = function(){};
+
     window.game = new Engine(InputManager, GraphicsManager, Tetris, Queue, config);
 }
