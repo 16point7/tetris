@@ -81,7 +81,7 @@ Engine.prototype.endGame = function() {
 /* Kicks off the game loop */
 Engine.prototype.startLoop = function() {
     this.prev = window.performance.now();
-    this.loopId = this.loop(this.prev);
+    this.loop(this.prev);
     this.activeGame = true;
 }
 

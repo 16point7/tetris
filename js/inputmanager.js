@@ -3,8 +3,7 @@ function InputManager() {
     this.notify;        // callback for game action key event
     this.newGame;       // callback for new game key event
     this.quitGame;      // callback for quit key event
-    this.pauseGame;     // callback for pause key event
-    
+    this.pauseGame;     // callback for pause key event    
 }
 
 /* Defines the game-related inputs */
