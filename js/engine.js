@@ -29,7 +29,6 @@ Engine.prototype.setup = function() {
     this.tt.setConfig(this.cf.tetris);
 
     this.loop = this.loop.bind(this);   // so RAF has access to this
-    console.log('Engine.setup()');
 }
 
 /* Game Loop */
@@ -45,7 +44,6 @@ Engine.prototype.loop = function(time) {
 Engine.prototype.action = function(e) {    
     if (this.loopId != null)
         this.moves.push(e);
-    console.log('Engine.action()');
 }
 
 /* Callback for new game event */
@@ -56,7 +54,6 @@ Engine.prototype.newGame = function() {
         this.resetInputQueue();
         this.startLoop();        
     }
-    console.log('Engine.newGame()');
 }
 
 /* Callback for pause game event */
@@ -67,7 +64,6 @@ Engine.prototype.pauseGame = function() {
         else
             this.endLoop();
     }
-    console.log('Engine.pauseGame()');
 }
 
 /* Callback for end game event */
@@ -78,7 +74,6 @@ Engine.prototype.endGame = function() {
         this.endLoop();
         this.activeGame = false;        
     }
-    console.log('Engine.endGame()');
 }
 
 /* Kicks off the game loop */
@@ -86,14 +81,12 @@ Engine.prototype.startLoop = function() {
     this.prev = window.performance.now();
     this.loopId = this.loop(this.prev);
     this.activeGame = true;
-    console.log('Engine.launchGame()');
 }
 
 /* Stops the game loop */
 Engine.prototype.endLoop = function() {
     cancelAnimationFrame(this.loopId);
     this.loopId = null;
-    console.log('Engine.endLoop()');
 }
 
 /* Clears the input queue */

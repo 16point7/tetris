@@ -14,15 +14,12 @@ GraphicsManager.prototype.initialize = function() {
 
 /* Clears the gameplay canvases, but not the static canvases */
 GraphicsManager.prototype.newState = function() {
-    console.log('GraphicsManager.newState()');
 }
 
 /* Display end-game graphics */
 GraphicsManager.prototype.endState = function() {
-    console.log('GraphicsManager.endState()');
 }
 
 /* Re-renders canvases that have changed */
 GraphicsManager.prototype.render = function(data, delta) {
-    console.log('GraphicsManager.render()');
 }
