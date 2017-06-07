@@ -12,8 +12,10 @@ Queue.prototype.push = function(val) {
 }
 
 Queue.prototype.pop = function() {
-    if (this.size() == 0)
-        return undefined;
+    if (this.size() == 0) {
+        this.clear();
+        return undefined; 
+    }
     return this.buffer[this.read++];
 }
 
