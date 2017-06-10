@@ -98,8 +98,8 @@ GraphicsManager.prototype.newState = function() {
 }
 
 /* Displays end-game graphics */
-GraphicsManager.prototype.endState = function() {    
-    this.lastFrame = true;
+GraphicsManager.prototype.endState = function() {
+    this.drawGameOver();
 }
 
 /* Re-renders canvases that have changed */
@@ -128,10 +128,6 @@ GraphicsManager.prototype.render = function(data, delta) {
         this.clearScore();
         this.drawScore(data.score.data);
         data.score.dirty = false;
-    }
-
-    if (this.lastFrame) {
-        this.drawGameOver();
     }
 }
 
