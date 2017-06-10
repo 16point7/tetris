@@ -148,13 +148,13 @@ Tetris.prototype.rotateL = function(piece) {
 
 /* Collision detection */
 Tetris.prototype.valid = function(j, i, frame, board) {
-    if((((0xF000 & frame ) << 2 ) >>> i ) & board[j])   // row 1
+    if(((0xF000 & frame ) >>> i ) & board[j])           // row 1
         return false;
-    if((((0x0F00 & frame) << 6) >>> i) & board[j+1])    // row 2
+    if((((0x0F00 & frame) << 4) >>> i) & board[j+1])    // row 2
         return false;
-    if((((0x00F0 & frame) << 10) >>> i) & board[j+2])   // row 3 
+    if((((0x00F0 & frame) << 8) >>> i) & board[j+2])    // row 3 
         return false;
-    if((((0x000F & frame) << 14) >>> i) & board[j+3])   // row 4
+    if((((0x000F & frame) << 12) >>> i) & board[j+3])   // row 4
         return false;
     return true;    
 }
@@ -163,7 +163,7 @@ Tetris.prototype.valid = function(j, i, frame, board) {
 Tetris.prototype.freeze = function(piece, board) {
     var mask = 0xF000;
     for (var j = 0; j < 4; j++) {
-        board[piece.j+j] |= (((mask&piece.rotations[piece.rIdx])<<(2+(4*j)))>>>piece.i);
+        board[piece.j+j] |= (((mask&piece.rotations[piece.rIdx])<<(4*j))>>>piece.i);
         mask >>>= 4;
     }
 }
@@ -172,14 +172,14 @@ Tetris.prototype.freeze = function(piece, board) {
 Tetris.prototype.checkForLines = function(board) {
     var linesCleared = 0;
     for (var j = this.board.length-5; j > -1; j--) {
-        if (board[j] == 245775)     // empty
+        if (board[j] == 2049)     // empty
             break;
-        if (board[j] == 262143) {   // filled
+        if (board[j] == 4095) {   // filled
             var slow = j;
             var fast = j-1;
             while (fast > -1)
                 board[slow--] = board[fast--];
-            board[0] = 245775;
+            board[0] = 2049;
             linesCleared++;
             j++;    // try line again
         }             
@@ -217,16 +217,16 @@ Tetris.prototype.recordScoreUpdate = function() {
 
 /* Constructs a play-area of 10xheight surrounded by 4 bits of barrier */
 Tetris.prototype.buildBoard = function(height) {
-    var board = new Int16Array(new ArrayBuffer(2*(height+4)));
+    var board = new Int16Array(new ArrayBuffer(2*(height+8)));
     return board;
 }
 
 /* Clears out the board */
 Tetris.prototype.resetBoard = function() {
     for (var j = 0; j < this.board.length-4; j++)
-        this.board[j] = 245775;      //side walls
+        this.board[j] = 2049;   //side walls
     for (var j = this.board.length-4; j < this.board.length; j++)
-        this.board[j] = 262143;      //bottom wall
+        this.board[j] = 4095;   //bottom wall
 }
 
 /* Piece1 <-- Piece2 <-- bag */
@@ -263,7 +263,7 @@ Tetris.prototype.SHAPES = [
 
 /* Default start location */
 Tetris.prototype.START_J = 0;
-Tetris.prototype.START_I = 7;
+Tetris.prototype.START_I = 8;
 
 /* Inner-class */
 Tetris.prototype.Piece = function(j, i) {

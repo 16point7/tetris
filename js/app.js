@@ -16,8 +16,8 @@ window.onload = function() {
         tetris: 
             {
                 dropPeriod: 250,
-                pieceFreq: 1,
-                height: 24
+                pieceFreq: 2,
+                height: 20
             }           
     };
 

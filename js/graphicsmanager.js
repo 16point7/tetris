@@ -44,9 +44,9 @@ GraphicsManager.prototype.initialize = function() {
     this.gridLeft = this.square * 7;
     this.gridTop = this.square;
     this.nextLeft = this.square * 19;
-    this.nextTop = this.square * (1 +((Math.max(this.height,4)-4)/2));
-    this.activeLeft = this.gridLeft - this.square * 5;
-    this.activeTop = this.gridTop - this.square * 4;
+    this.nextTop = this.square * (1+((Math.max(this.height,4)-4)/2));
+    this.activeLeft = this.gridLeft - this.square*5;
+    this.activeTop = this.gridTop - this.square*4;
 
     this.canvas1 = document.createElement('canvas');
     this.canvas2 = document.createElement('canvas');
@@ -63,7 +63,7 @@ GraphicsManager.prototype.initialize = function() {
     this.canvas1.height =
     this.canvas2.height =
     this.canvas3.height =
-    this.canvas4.height = this.square * (Math.max(this.height+2, 6));
+    this.canvas4.height = this.square * (Math.max(this.height+2,6));
 
     this.canvas1.style.position =
     this.canvas2.style.position =
