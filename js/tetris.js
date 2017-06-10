@@ -47,6 +47,8 @@ Tetris.prototype.newState = function() {
     this.loadPieces();
     this.accumulator = 0;
     this.threshold = this.cf.dropPeriod;
+    this.data.score.data = 0;
+    this.data.score.dirty = true;
     this.gameOver = false;
 }
 
@@ -127,7 +129,7 @@ Tetris.prototype.moveDown = function(piece) {
 
 /* Simulate drop by reducing the drop period */
 Tetris.prototype.drop = function(piece) {
-    this.threshold = 1;
+    this.threshold = 25;
 }
 
 /* Try CW rotation */

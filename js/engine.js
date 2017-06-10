@@ -23,7 +23,7 @@ Engine.prototype.setup = function() {
     this.im.register('pausegame', this.pauseGame.bind(this));    
     this.im.listen();
 
-    this.gm.setContainer(this.cf.containerId);
+    this.gm.setConfig(this.cf);
     this.gm.initialize();
 
     this.tt.setConfig(this.cf);
