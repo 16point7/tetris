@@ -44,15 +44,19 @@ InputManager.prototype.keyHandler = function(e) {
         case this.km.RTURN:
         case this.km.LTURN:
             this.notify(e.keyCode);
+            e.preventDefault();
             break;
         case this.km.NEW:
             this.newGame();
+            e.preventDefault();
             break;
         case this.km.QUIT:
             this.quitGame();
+            e.preventDefault();
             break;
         case this.km.PAUSE:
             this.pauseGame();
+            e.preventDefault();
             break;        
     }
 }
