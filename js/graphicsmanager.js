@@ -226,14 +226,19 @@ GraphicsManager.prototype.drawStatic = function(grid) {
 }
 
 /* Draws the score */
-GraphicsManager.prototype.drawScore = function(score) {
+GraphicsManager.prototype.drawScore = function(data) {
     this.ctx4.beginPath();
     this.ctx4.font = '14px monospace';
     this.ctx4.textAlign = 'left';
     this.ctx4.fillStyle = this.borderColor;
-    this.ctx4.fillText('Score: ' + score,
+    this.ctx4.textBaseline = 'top';
+    this.ctx4.fillText('Score: ' + data.score,
         this.nextLeft,
-        this.nextTop+this.square*6,
+        this.nextTop+this.square*5,
+        this.canvas4.width-this.nextLeft);
+    this.ctx4.fillText('Lines: ' + data.lines,
+        this.nextLeft,
+        this.nextTop+this.square*5 + 14*window.devicePixelRatio,
         this.canvas4.width-this.nextLeft);
 }
 

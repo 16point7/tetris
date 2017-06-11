@@ -11,6 +11,7 @@ function Tetris() {
     this.gameOver;      // boolean
     this.notifyEnd;     // callback to notify engine of ended game
     this.score;         // game score
+    this.lines;         // lines cleared
 }
 
 /* Stores the default configurations */
@@ -38,7 +39,7 @@ Tetris.prototype.initialize = function() {
         active:{data:this.piece1,dirty:false},
         next:{data:this.piece2,dirty:false},
         static:{data:this.board,dirty:false},
-        score:{data:0,dirty:false},
+        score:{data:{score:0,lines:0},dirty:false},
     };
 }
 
@@ -49,7 +50,9 @@ Tetris.prototype.newState = function() {
     this.accumulator = 0;
     this.threshold = this.cf.dropPeriod;
     this.score = 0;
-    this.data.score.data = this.score;
+    this.lines = 0;
+    this.data.score.data.score = this.score;
+    this.data.score.data.lines = this.lines;
     this.data.score.dirty = true;
     this.gameOver = false;
 }
@@ -195,6 +198,7 @@ Tetris.prototype.checkForLines = function(board) {
 /* Updates the score based on level */
 Tetris.prototype.updateScore = function(linesCleared) {
     this.score += linesCleared*100; // just for now
+    this.lines += linesCleared;
     this.recordScoreUpdate();
 }
 
@@ -215,8 +219,9 @@ Tetris.prototype.recordBoardUpdate = function() {
 
 /* Invalidate score */
 Tetris.prototype.recordScoreUpdate = function() {
+    this.data.score.data.score = this.score;
+    this.data.score.data.lines = this.lines;
     this.data.score.dirty = true;
-    this.data.score.data = this.score;
 }
 
 /* Constructs a play-area of 10xheight surrounded by 4 bits of barrier */
