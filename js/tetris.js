@@ -10,6 +10,7 @@ function Tetris() {
     this.bag;           // randomized grab-bag of tetris pieces
     this.gameOver;      // boolean
     this.notifyEnd;     // callback to notify engine of ended game
+    this.score;         // game score
 }
 
 /* Stores the default configurations */
@@ -47,7 +48,8 @@ Tetris.prototype.newState = function() {
     this.loadPieces();
     this.accumulator = 0;
     this.threshold = this.cf.dropPeriod;
-    this.data.score.data = 0;
+    this.score = 0;
+    this.data.score.data = this.score;
     this.data.score.dirty = true;
     this.gameOver = false;
 }
