@@ -2,14 +2,11 @@ function Engine(InputManager, GraphicsManager, Tetris, Queue, config) {
     this.im = new InputManager();
     this.gm = new GraphicsManager();
     this.tt = new Tetris();
-
     this.cf = config;
-
     this.moves = new Queue(32);
-
-    this.activeGame;        // boolean
-    this.loopId;            // id of a running loop
-    this.prev;              // start time of the previous frame
+    this.activeGame;                    // boolean
+    this.loopId;                        // id of a running loop
+    this.prev;                          // start time of the previous frame
 
     this.setup();
 }
