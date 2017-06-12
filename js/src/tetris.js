@@ -177,8 +177,8 @@ Tetris.prototype.valid = function(j, i, frame, board) {
 
 /*  Writes piece to board */
 Tetris.prototype.freeze = function(piece, board) {
-    var mask = 0xF000;
-    for (var j = 0; j < 4; j++) {
+    let mask = 0xF000;
+    for (let j = 0; j < 4; j++) {
         board[piece.j+j] |= (((mask&piece.rotations[piece.rIdx])<<(4*j))>>>piece.i);
         mask >>>= 4;
     }
@@ -186,13 +186,13 @@ Tetris.prototype.freeze = function(piece, board) {
 
 /* Checks if any lines are filled. If so, clear them, and update score. */
 Tetris.prototype.checkForLines = function(board) {
-    var linesCleared = 0;
-    for (var j = this.board.length-5; j > -1; j--) {
+    let linesCleared = 0;
+    for (let j = this.board.length-5; j > -1; j--) {
         if (board[j] == 2049)     // empty
             break;
         if (board[j] == 4095) {   // filled
-            var slow = j;
-            var fast = j-1;
+            let slow = j;
+            let fast = j-1;
             while (fast > -1)
                 board[slow--] = board[fast--];
             board[0] = 2049;
@@ -247,7 +247,7 @@ Tetris.prototype.recordScoreUpdate = function() {
 
 /* Constructs a play-area of 10xheight surrounded by 4 bits of barrier */
 Tetris.prototype.buildBoard = function(height) {
-    var board = new Int16Array(new ArrayBuffer(2*(height+8)));
+    let board = new Int16Array(new ArrayBuffer(2*(height+8)));
     return board;
 };
 

@@ -38,7 +38,7 @@ GraphicsManager.prototype.setConfig = function(config) {
 GraphicsManager.prototype.initialize = function() {
     this.container.style.padding = '0px';
 
-    var trueWidth = this.container.clientWidth * window.devicePixelRatio;
+    let trueWidth = this.container.clientWidth * window.devicePixelRatio;
 
     this.square = trueWidth / 24;
     this.gridLeft = this.square * 7;
@@ -163,15 +163,15 @@ GraphicsManager.prototype.clear = function(ctx, left, top, width, height) {
 GraphicsManager.prototype.drawActive = function(frame, relJ, relI) {
     this.ctx1.beginPath();
     this.ctx1.fillStyle = this.fillColor;
-    var mask = 32768;       // left-most bit
-    for (var j = 0; j < 4; j++) {
-        var absJ = j + relJ;
+    let mask = 32768;       // left-most bit
+    for (let j = 0; j < 4; j++) {
+        let absJ = j + relJ;
         if (absJ < 4) {     // gutter zone
             mask >>>= 4;
             continue;
         }
-        for (var i = 0; i < 4; i++) {
-            var absI = i + relI;
+        for (let i = 0; i < 4; i++) {
+            let absI = i + relI;
             if (absI > 4 && (mask & frame)) {
                 this.ctx1.rect(this.activeLeft+this.square*absI,
                     this.activeTop+this.square*absJ,
@@ -188,9 +188,9 @@ GraphicsManager.prototype.drawActive = function(frame, relJ, relI) {
 GraphicsManager.prototype.drawNext = function(frame) {
     this.ctx2.beginPath();
     this.ctx2.fillStyle = this.fillColor;
-    var mask = 32768;
-    for (var j = 0; j < 4; j++) {
-        for (var i = 0; i < 4; i++) {
+    let mask = 32768;
+    for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < 4; i++) {
             if (mask & frame) {
                 this.ctx2.rect(this.nextLeft+this.square*i,
                     this.nextTop+this.square*j,
@@ -207,12 +207,12 @@ GraphicsManager.prototype.drawNext = function(frame) {
 GraphicsManager.prototype.drawStatic = function(grid) {
     this.ctx2.beginPath();
     this.ctx2.fillStyle = this.fillColor;
-    for (var j = grid.length-5; j > 3; j--) {
-        var row = grid[j];
+    for (let j = grid.length-5; j > 3; j--) {
+        let row = grid[j];
         if (row == 2049)    // empty row
             break;
-        var mask = 1024;    // left-most bit
-        for (var i = 0; i < 10; i++) {
+        let mask = 1024;    // left-most bit
+        for (let i = 0; i < 10; i++) {
             if (mask & grid[j]) {
                 this.ctx2.rect(this.gridLeft+this.square*i,
                     this.gridTop+this.square*(j-4),

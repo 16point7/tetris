@@ -33,9 +33,9 @@ RandomSack.prototype.peek = function() {
 };
 
 RandomSack.prototype.shuffle = function() {
-    for (var i = this.data.length-1; i > -1; i--) {
-        var rand = (Math.random()*(i+1)) | 0;
-        var temp = this.data[i];
+    for (let i = this.data.length-1; i > -1; i--) {
+        let rand = (Math.random()*(i+1)) | 0;
+        let temp = this.data[i];
         this.data[i] = this.data[rand];
         this.data[rand] = temp;
     }
@@ -48,9 +48,9 @@ RandomSack.prototype.size = function() {
 
 /*  Internal helper method */
 RandomSack.prototype.build = function(dataSet, freq) {
-    var output = new Array(dataSet.length * freq);
-    for (var i = 0; i < dataSet.length; i++) {
-        for (var j = 0; j < freq; j++) {
+    let output = new Array(dataSet.length * freq);
+    for (let i = 0; i < dataSet.length; i++) {
+        for (let j = 0; j < freq; j++) {
             output[freq*i + j] = dataSet[i];
         }
     }

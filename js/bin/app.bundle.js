@@ -111,7 +111,7 @@ Engine.prototype.setup = function() {
 /* Game Loop */
 Engine.prototype.loop = function(time) {
     this.loopId = requestAnimationFrame(this.loop);
-    var delta = time - this.prev;
+    let delta = time - this.prev;
     this.tt.update(this.moves, delta);
     this.gm.render(this.tt.data, delta);
     this.prev = time;    
@@ -187,7 +187,7 @@ window.onload = function() {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = exports = {
+module.exports = {
     keyMap: {
         LEFT:37,
         RIGHT:39,
@@ -256,7 +256,7 @@ GraphicsManager.prototype.setConfig = function(config) {
 GraphicsManager.prototype.initialize = function() {
     this.container.style.padding = '0px';
 
-    var trueWidth = this.container.clientWidth * window.devicePixelRatio;
+    let trueWidth = this.container.clientWidth * window.devicePixelRatio;
 
     this.square = trueWidth / 24;
     this.gridLeft = this.square * 7;
@@ -381,15 +381,15 @@ GraphicsManager.prototype.clear = function(ctx, left, top, width, height) {
 GraphicsManager.prototype.drawActive = function(frame, relJ, relI) {
     this.ctx1.beginPath();
     this.ctx1.fillStyle = this.fillColor;
-    var mask = 32768;       // left-most bit
-    for (var j = 0; j < 4; j++) {
-        var absJ = j + relJ;
+    let mask = 32768;       // left-most bit
+    for (let j = 0; j < 4; j++) {
+        let absJ = j + relJ;
         if (absJ < 4) {     // gutter zone
             mask >>>= 4;
             continue;
         }
-        for (var i = 0; i < 4; i++) {
-            var absI = i + relI;
+        for (let i = 0; i < 4; i++) {
+            let absI = i + relI;
             if (absI > 4 && (mask & frame)) {
                 this.ctx1.rect(this.activeLeft+this.square*absI,
                     this.activeTop+this.square*absJ,
@@ -406,9 +406,9 @@ GraphicsManager.prototype.drawActive = function(frame, relJ, relI) {
 GraphicsManager.prototype.drawNext = function(frame) {
     this.ctx2.beginPath();
     this.ctx2.fillStyle = this.fillColor;
-    var mask = 32768;
-    for (var j = 0; j < 4; j++) {
-        for (var i = 0; i < 4; i++) {
+    let mask = 32768;
+    for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < 4; i++) {
             if (mask & frame) {
                 this.ctx2.rect(this.nextLeft+this.square*i,
                     this.nextTop+this.square*j,
@@ -425,12 +425,12 @@ GraphicsManager.prototype.drawNext = function(frame) {
 GraphicsManager.prototype.drawStatic = function(grid) {
     this.ctx2.beginPath();
     this.ctx2.fillStyle = this.fillColor;
-    for (var j = grid.length-5; j > 3; j--) {
-        var row = grid[j];
+    for (let j = grid.length-5; j > 3; j--) {
+        let row = grid[j];
         if (row == 2049)    // empty row
             break;
-        var mask = 1024;    // left-most bit
-        for (var i = 0; i < 10; i++) {
+        let mask = 1024;    // left-most bit
+        for (let i = 0; i < 10; i++) {
             if (mask & grid[j]) {
                 this.ctx2.rect(this.gridLeft+this.square*i,
                     this.gridTop+this.square*(j-4),
@@ -623,9 +623,9 @@ Queue.prototype.clear = function() {
 };
 
 Queue.prototype.grow = function() {
-    var old = this.buffer;
+    let old = this.buffer;
     this.buffer = new Int8Array(new ArrayBuffer(2*old.length));
-    var i = 0;
+    let i = 0;
     while (this.read < this.write)
         this.buffer[i++] = old[this.read++];
     this.read = 0;
@@ -673,9 +673,9 @@ RandomSack.prototype.peek = function() {
 };
 
 RandomSack.prototype.shuffle = function() {
-    for (var i = this.data.length-1; i > -1; i--) {
-        var rand = (Math.random()*(i+1)) | 0;
-        var temp = this.data[i];
+    for (let i = this.data.length-1; i > -1; i--) {
+        let rand = (Math.random()*(i+1)) | 0;
+        let temp = this.data[i];
         this.data[i] = this.data[rand];
         this.data[rand] = temp;
     }
@@ -688,9 +688,9 @@ RandomSack.prototype.size = function() {
 
 /*  Internal helper method */
 RandomSack.prototype.build = function(dataSet, freq) {
-    var output = new Array(dataSet.length * freq);
-    for (var i = 0; i < dataSet.length; i++) {
-        for (var j = 0; j < freq; j++) {
+    let output = new Array(dataSet.length * freq);
+    for (let i = 0; i < dataSet.length; i++) {
+        for (let j = 0; j < freq; j++) {
             output[freq*i + j] = dataSet[i];
         }
     }
@@ -882,8 +882,8 @@ Tetris.prototype.valid = function(j, i, frame, board) {
 
 /*  Writes piece to board */
 Tetris.prototype.freeze = function(piece, board) {
-    var mask = 0xF000;
-    for (var j = 0; j < 4; j++) {
+    let mask = 0xF000;
+    for (let j = 0; j < 4; j++) {
         board[piece.j+j] |= (((mask&piece.rotations[piece.rIdx])<<(4*j))>>>piece.i);
         mask >>>= 4;
     }
@@ -891,13 +891,13 @@ Tetris.prototype.freeze = function(piece, board) {
 
 /* Checks if any lines are filled. If so, clear them, and update score. */
 Tetris.prototype.checkForLines = function(board) {
-    var linesCleared = 0;
-    for (var j = this.board.length-5; j > -1; j--) {
+    let linesCleared = 0;
+    for (let j = this.board.length-5; j > -1; j--) {
         if (board[j] == 2049)     // empty
             break;
         if (board[j] == 4095) {   // filled
-            var slow = j;
-            var fast = j-1;
+            let slow = j;
+            let fast = j-1;
             while (fast > -1)
                 board[slow--] = board[fast--];
             board[0] = 2049;
@@ -952,7 +952,7 @@ Tetris.prototype.recordScoreUpdate = function() {
 
 /* Constructs a play-area of 10xheight surrounded by 4 bits of barrier */
 Tetris.prototype.buildBoard = function(height) {
-    var board = new Int16Array(new ArrayBuffer(2*(height+8)));
+    let board = new Int16Array(new ArrayBuffer(2*(height+8)));
     return board;
 };
 

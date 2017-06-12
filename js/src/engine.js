@@ -39,7 +39,7 @@ Engine.prototype.setup = function() {
 /* Game Loop */
 Engine.prototype.loop = function(time) {
     this.loopId = requestAnimationFrame(this.loop);
-    var delta = time - this.prev;
+    let delta = time - this.prev;
     this.tt.update(this.moves, delta);
     this.gm.render(this.tt.data, delta);
     this.prev = time;    

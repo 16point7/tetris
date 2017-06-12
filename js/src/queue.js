@@ -34,9 +34,9 @@ Queue.prototype.clear = function() {
 };
 
 Queue.prototype.grow = function() {
-    var old = this.buffer;
+    let old = this.buffer;
     this.buffer = new Int8Array(new ArrayBuffer(2*old.length));
-    var i = 0;
+    let i = 0;
     while (this.read < this.write)
         this.buffer[i++] = old[this.read++];
     this.read = 0;
