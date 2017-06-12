@@ -1,0 +1,8 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "devDependencies": {
+    "eslint": "^4.0.0",
+    "webpack": "^2.6.1"
+  }
+}
