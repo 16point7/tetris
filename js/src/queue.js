@@ -42,3 +42,5 @@ Queue.prototype.grow = function() {
     this.read = 0;
     this.write = i;
 }
+
+module.exports.Queue = Queue;

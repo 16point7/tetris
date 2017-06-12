@@ -293,3 +293,5 @@ GraphicsManager.prototype.drawGameOver = function() {
         this.canvas4.height/2,
         this.square*10);
 }
+
+module.exports.GraphicsManager = GraphicsManager;

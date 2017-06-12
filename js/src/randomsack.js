@@ -56,3 +56,5 @@ RandomSack.prototype.build = function(dataSet, freq) {
     }
     return output;
 }
+
+module.exports.RandomSack = RandomSack;

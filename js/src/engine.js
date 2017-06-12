@@ -1,4 +1,10 @@
-function Engine(InputManager, GraphicsManager, Tetris, Queue, config) {
+const InputManager  = require('./inputmanager.js').InputManager;
+const GraphicsManager = require('./graphicsmanager.js').GraphicsManager;
+const Tetris = require('./tetris.js').Tetris;
+const Queue = require('./queue.js').Queue;
+const config = require('./config.js');
+
+function Engine() {
     this.im = new InputManager();
     this.gm = new GraphicsManager();
     this.tt = new Tetris();
@@ -92,3 +98,5 @@ Engine.prototype.endLoop = function() {
 Engine.prototype.resetInputQueue = function() {
     this.moves.clear();
 }
+
+module.exports.Engine = Engine;

@@ -60,3 +60,5 @@ InputManager.prototype.keyHandler = function(e) {
             break;        
     }
 }
+
+module.exports.InputManager = InputManager;

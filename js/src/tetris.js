@@ -1,3 +1,5 @@
+const RandomSack = require('./randomsack').RandomSack;
+
 function Tetris() {
     this.cf;            // configuration object
     this.km;            // key map
@@ -336,3 +338,5 @@ Tetris.prototype.Piece.prototype.getRight = function() {
 Tetris.prototype.Piece.prototype.getLeft = function() {
     return this.rIdx == 0 ? this.rotations.length-1 : this.rIdx - 1;
 }
+
+module.exports.Tetris = Tetris;
