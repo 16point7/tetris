@@ -14,7 +14,7 @@ function Tetris() {
     this.notifyEnd;     // callback to notify engine of ended game
     this.score;         // game score
     this.totalLines;    // total lines cleared
-    this.lines          // line clear accumulator
+    this.lines;         // line clear accumulator
     this.minLines;      // lines to reach next lvl. after, +1 lvl per 10 lines
     this.level;         // scoring level
 
@@ -24,7 +24,7 @@ function Tetris() {
 Tetris.prototype.setConfig = function(config) {
     this.cf = config.tetris;
     this.km = config.keyMap;
-}
+};
 
 /* Registers callbacks for game-related events */
 Tetris.prototype.register = function(event, callback) {
@@ -33,7 +33,7 @@ Tetris.prototype.register = function(event, callback) {
             this.notifyEnd = callback;
             break;
     }
-}
+};
 
 /* One-time set-up */
 Tetris.prototype.initialize = function() {
@@ -47,7 +47,7 @@ Tetris.prototype.initialize = function() {
         static:{data:this.board,dirty:false},
         score:{data:{score:0,lines:0,level:0},dirty:false},
     };
-}
+};
 
 /* Resets all game-state values */
 Tetris.prototype.newState = function() {
@@ -65,12 +65,12 @@ Tetris.prototype.newState = function() {
     this.resetBoard();
     this.loadPieces();
     this.resetDropPeriod();
-}
+};
 
 /* Clean-up duties to perform when ending a game */
 Tetris.prototype.endState = function() {
     this.gameOver = true;
-}
+};
 
 /* Updates the gamestate based on player inputs and elapsed time */
 Tetris.prototype.update = function(moves, delta) {
@@ -82,7 +82,7 @@ Tetris.prototype.update = function(moves, delta) {
         this.moveDown(this.piece1);
         this.accumulator = this.accumulator - this.threshold;
     }
-}
+};
 
 /* Action dispatcher */
 Tetris.prototype.process = function(e) {
@@ -97,7 +97,7 @@ Tetris.prototype.process = function(e) {
             this.moveDown(this.piece1);
             break;
         case this.km.DROP:
-            this.drop(this.piece1);
+            this.drop();
             break;
         case this.km.RTURN:
             this.rotateR(this.piece1);
@@ -106,7 +106,7 @@ Tetris.prototype.process = function(e) {
             this.rotateL(this.piece1);
             break;
     }
-}
+};
 
 /* Try left */
 Tetris.prototype.moveLeft = function(piece) {
@@ -114,7 +114,7 @@ Tetris.prototype.moveLeft = function(piece) {
         piece.i--;
         this.recordPiece1Update();
     }
-}
+};
 
 /* Try right */
 Tetris.prototype.moveRight = function(piece) {
@@ -122,7 +122,7 @@ Tetris.prototype.moveRight = function(piece) {
         piece.i++;
         this.recordPiece1Update();
     }
-}
+};
 
 /* Try down - the only way to lock a piece */
 Tetris.prototype.moveDown = function(piece) {
@@ -139,12 +139,12 @@ Tetris.prototype.moveDown = function(piece) {
             this.notifyEnd();
         }
     }
-}
+};
 
 /* Simulate drop by reducing the drop period */
-Tetris.prototype.drop = function(piece) {
+Tetris.prototype.drop = function() {
     this.threshold = 2;
-}
+};
 
 /* Try CW rotation */
 Tetris.prototype.rotateR = function(piece) {
@@ -152,7 +152,7 @@ Tetris.prototype.rotateR = function(piece) {
         piece.rIdx = piece.getRight();
         this.recordPiece1Update();
     }
-}
+};
 
 /* Try CCW rotation */
 Tetris.prototype.rotateL = function(piece) {
@@ -160,7 +160,7 @@ Tetris.prototype.rotateL = function(piece) {
         piece.rIdx = piece.getLeft();
         this.recordPiece1Update();
     }
-}
+};
 
 /* Collision detection */
 Tetris.prototype.valid = function(j, i, frame, board) {
@@ -173,7 +173,7 @@ Tetris.prototype.valid = function(j, i, frame, board) {
     if((((0x000F & frame) << 12) >>> i) & board[j+3])   // row 4
         return false;
     return true;    
-}
+};
 
 /*  Writes piece to board */
 Tetris.prototype.freeze = function(piece, board) {
@@ -182,7 +182,7 @@ Tetris.prototype.freeze = function(piece, board) {
         board[piece.j+j] |= (((mask&piece.rotations[piece.rIdx])<<(4*j))>>>piece.i);
         mask >>>= 4;
     }
-}
+};
 
 /* Checks if any lines are filled. If so, clear them, and update score. */
 Tetris.prototype.checkForLines = function(board) {
@@ -202,7 +202,7 @@ Tetris.prototype.checkForLines = function(board) {
     }
     if (linesCleared > 0)
         this.updateScore(linesCleared);
-}
+};
 
 /* Updates the score, lines, and level */
 Tetris.prototype.updateScore = function(linesCleared) {
@@ -215,27 +215,27 @@ Tetris.prototype.updateScore = function(linesCleared) {
         this.minLines = 10;
     }
     this.recordScoreUpdate();
-}
+};
 
 /* Calculates # lines needed to reach next lvl. After, +1 lvl per 10 lines */
 Tetris.prototype.getMinLines = function(startLevel) {
-    return Math.min(this.level*10+10,Math.max(100,this.level*10-50));
-}
+    return Math.min(startLevel*10+10,Math.max(100,startLevel*10-50));
+};
 
 /* Invalidates piece1 */
 Tetris.prototype.recordPiece1Update = function() {
     this.data.active.dirty = true;
-}
+};
 
 /* Invalidates piece2 */
 Tetris.prototype.recordPiece2Update = function() {
     this.data.next.dirty = true;
-}
+};
 
 /* Invalidates board */
 Tetris.prototype.recordBoardUpdate = function() {
     this.data.static.dirty = true;
-}
+};
 
 /* Invalidates score */
 Tetris.prototype.recordScoreUpdate = function() {
@@ -243,21 +243,21 @@ Tetris.prototype.recordScoreUpdate = function() {
     this.data.score.data.lines = this.totalLines;
     this.data.score.data.level = this.level;
     this.data.score.dirty = true;
-}
+};
 
 /* Constructs a play-area of 10xheight surrounded by 4 bits of barrier */
 Tetris.prototype.buildBoard = function(height) {
     var board = new Int16Array(new ArrayBuffer(2*(height+8)));
     return board;
-}
+};
 
 /* Clears out the board */
 Tetris.prototype.resetBoard = function() {
-    for (var j = 0; j < this.board.length-4; j++)
+    for (let j = 0; j < this.board.length-4; j++)
         this.board[j] = 2049;   //side walls
-    for (var j = this.board.length-4; j < this.board.length; j++)
+    for (let j = this.board.length-4; j < this.board.length; j++)
         this.board[j] = 4095;   //bottom wall
-}
+};
 
 /* Piece1 <-- Piece2 <-- bag */
 Tetris.prototype.loadPieces = function() {
@@ -274,7 +274,7 @@ Tetris.prototype.loadPieces = function() {
 
     this.recordPiece1Update();
     this.recordPiece2Update();
-}
+};
 
 /* Sets drop period based on level. Capped at level 29 */
 Tetris.prototype.resetDropPeriod = function() {
@@ -301,7 +301,7 @@ Tetris.prototype.resetDropPeriod = function() {
             this.threshold = (1/60) * 1000;
             break;
     }
-}
+};
 
 /* 16 bits to represent each 4x4 reference frame */
 Tetris.prototype.SHAPES = [
@@ -327,16 +327,16 @@ Tetris.prototype.Piece = function(j, i) {
     this.i = i;                     // 0 --> max from left-to-right
     this.rIdx = 0;                  // current index in the rotation array
     this.rotations;                 // an array of reference frames
-}
+};
 
 /* Returns the rIdx corresponding to a CW rotation */
 Tetris.prototype.Piece.prototype.getRight = function() {
     return this.rIdx == this.rotations.length-1 ? 0 : this.rIdx + 1;
-}
+};
 
 /* Returns the rIdx corresponding to a CCW rotation */
 Tetris.prototype.Piece.prototype.getLeft = function() {
     return this.rIdx == 0 ? this.rotations.length-1 : this.rIdx - 1;
-}
+};
 
 module.exports.Tetris = Tetris;

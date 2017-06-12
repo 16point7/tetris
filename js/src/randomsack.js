@@ -21,7 +21,7 @@ RandomSack.prototype.pop = function() {
         this.shuffle();
     }
     return this.data[this.top--];
-}
+};
 
 RandomSack.prototype.peek = function() {
     if (this.size() == 0) {
@@ -30,7 +30,7 @@ RandomSack.prototype.peek = function() {
         this.shuffle();
     }
     return this.data[this.top];
-}
+};
 
 RandomSack.prototype.shuffle = function() {
     for (var i = this.data.length-1; i > -1; i--) {
@@ -40,11 +40,11 @@ RandomSack.prototype.shuffle = function() {
         this.data[rand] = temp;
     }
     this.top = this.data.length-1;
-}
+};
 
 RandomSack.prototype.size = function() {
     return this.top + 1;
-}
+};
 
 /*  Internal helper method */
 RandomSack.prototype.build = function(dataSet, freq) {
@@ -55,6 +55,6 @@ RandomSack.prototype.build = function(dataSet, freq) {
         }
     }
     return output;
-}
+};
 
 module.exports.RandomSack = RandomSack;

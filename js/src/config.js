@@ -1,4 +1,4 @@
-module.exports = exports = {
+module.exports = {
     keyMap: {
         LEFT:37,
         RIGHT:39,

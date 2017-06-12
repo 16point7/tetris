@@ -34,7 +34,7 @@ Engine.prototype.setup = function() {
     this.tt.initialize();
 
     this.loop = this.loop.bind(this);   // so RAF has access to this
-}
+};
 
 /* Game Loop */
 Engine.prototype.loop = function(time) {
@@ -43,13 +43,13 @@ Engine.prototype.loop = function(time) {
     this.tt.update(this.moves, delta);
     this.gm.render(this.tt.data, delta);
     this.prev = time;    
-}
+};
 
 /* Callback for action events */
 Engine.prototype.action = function(e) {    
     if (this.loopId != null)
         this.moves.push(e);
-}
+};
 
 /* Callback for new game event */
 Engine.prototype.newGame = function() {
@@ -59,7 +59,7 @@ Engine.prototype.newGame = function() {
         this.resetInputQueue();
         this.startLoop();        
     }
-}
+};
 
 /* Callback for pause game event */
 Engine.prototype.pauseGame = function() {
@@ -69,7 +69,7 @@ Engine.prototype.pauseGame = function() {
         else
             this.endLoop();
     }
-}
+};
 
 /* Callback for end game event */
 Engine.prototype.endGame = function() {
@@ -79,24 +79,24 @@ Engine.prototype.endGame = function() {
         this.endLoop();
         this.activeGame = false;        
     }
-}
+};
 
 /* Kicks off the game loop */
 Engine.prototype.startLoop = function() {
     this.prev = window.performance.now();
     this.loop(this.prev);
     this.activeGame = true;
-}
+};
 
 /* Stops the game loop */
 Engine.prototype.endLoop = function() {
     cancelAnimationFrame(this.loopId);
     this.loopId = null;
-}
+};
 
 /* Clears the input queue */
 Engine.prototype.resetInputQueue = function() {
     this.moves.clear();
-}
+};
 
 module.exports.Engine = Engine;

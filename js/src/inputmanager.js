@@ -9,7 +9,7 @@ function InputManager() {
 /* Defines the game-related inputs */
 InputManager.prototype.setKeyMap = function(keyMap) {
     this.km = keyMap;
-}
+};
 
 /* Used to register callbacks for game-related events */
 InputManager.prototype.register = function(event, callback) {
@@ -27,12 +27,12 @@ InputManager.prototype.register = function(event, callback) {
             this.pauseGame = callback;
             break;
     }
-}
+};
 
 /* Registers the event filter with the browser. */
 InputManager.prototype.listen = function() {
     document.addEventListener('keydown', this.keyHandler.bind(this));
-}
+};
 
 /* Filter which is used to catch and dispatch game-related events. */
 InputManager.prototype.keyHandler = function(e) {
@@ -59,6 +59,6 @@ InputManager.prototype.keyHandler = function(e) {
             e.preventDefault();
             break;        
     }
-}
+};
 
 module.exports.InputManager = InputManager;

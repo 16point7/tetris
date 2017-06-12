@@ -9,7 +9,7 @@ Queue.prototype.push = function(val) {
     if (this.write == this.buffer.length)
         this.grow();
     this.buffer[this.write++] = val;
-}
+};
 
 Queue.prototype.pop = function() {
     if (this.size() == 0) {
@@ -17,21 +17,21 @@ Queue.prototype.pop = function() {
         return undefined; 
     }
     return this.buffer[this.read++];
-}
+};
 
 Queue.prototype.peek = function() {
     if (this.size() == 0)
         return undefined;
     return this.buffer[this.read];
-}
+};
 
 Queue.prototype.size = function() {
     return this.write - this.read;
-}
+};
 
 Queue.prototype.clear = function() {
     this.read = this.write = 0;
-}
+};
 
 Queue.prototype.grow = function() {
     var old = this.buffer;
@@ -41,6 +41,6 @@ Queue.prototype.grow = function() {
         this.buffer[i++] = old[this.read++];
     this.read = 0;
     this.write = i;
-}
+};
 
 module.exports.Queue = Queue;

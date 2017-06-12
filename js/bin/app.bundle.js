@@ -106,7 +106,7 @@ Engine.prototype.setup = function() {
     this.tt.initialize();
 
     this.loop = this.loop.bind(this);   // so RAF has access to this
-}
+};
 
 /* Game Loop */
 Engine.prototype.loop = function(time) {
@@ -115,13 +115,13 @@ Engine.prototype.loop = function(time) {
     this.tt.update(this.moves, delta);
     this.gm.render(this.tt.data, delta);
     this.prev = time;    
-}
+};
 
 /* Callback for action events */
 Engine.prototype.action = function(e) {    
     if (this.loopId != null)
         this.moves.push(e);
-}
+};
 
 /* Callback for new game event */
 Engine.prototype.newGame = function() {
@@ -131,7 +131,7 @@ Engine.prototype.newGame = function() {
         this.resetInputQueue();
         this.startLoop();        
     }
-}
+};
 
 /* Callback for pause game event */
 Engine.prototype.pauseGame = function() {
@@ -141,7 +141,7 @@ Engine.prototype.pauseGame = function() {
         else
             this.endLoop();
     }
-}
+};
 
 /* Callback for end game event */
 Engine.prototype.endGame = function() {
@@ -151,25 +151,25 @@ Engine.prototype.endGame = function() {
         this.endLoop();
         this.activeGame = false;        
     }
-}
+};
 
 /* Kicks off the game loop */
 Engine.prototype.startLoop = function() {
     this.prev = window.performance.now();
     this.loop(this.prev);
     this.activeGame = true;
-}
+};
 
 /* Stops the game loop */
 Engine.prototype.endLoop = function() {
     cancelAnimationFrame(this.loopId);
     this.loopId = null;
-}
+};
 
 /* Clears the input queue */
 Engine.prototype.resetInputQueue = function() {
     this.moves.clear();
-}
+};
 
 module.exports.Engine = Engine;
 
@@ -181,7 +181,7 @@ const Engine = __webpack_require__(0).Engine;
 
 window.onload = function() {
     window.game = new Engine();
-}
+};
 
 /***/ }),
 /* 2 */
@@ -223,7 +223,7 @@ function GraphicsManager() {
     this.gridLeft;      // pos of grid left boundary in pp
     this.gridTop;       // pos of grid top boundary in pp
     this.nextLeft;      // pos of next pc left boundary in pp
-    this.nextTop        // pos of next pc top boundary in pp
+    this.nextTop;        // pos of next pc top boundary in pp
     this.activeLeft;    // pos of active pc rel coord left boundary in pp
     this.activeTop;     // pos of active pc rel coord top boundary in pp
     this.canvas1;       // active piece canvas
@@ -250,7 +250,7 @@ GraphicsManager.prototype.setConfig = function(config) {
     this.lineWeight = config.lineWeight;
     this.lineColor = config.lineColor;
     this.fillColor = config.fillColor;
-}
+};
 
 /* Builds canvases and draw grids */
 GraphicsManager.prototype.initialize = function() {
@@ -275,7 +275,7 @@ GraphicsManager.prototype.initialize = function() {
     this.canvas1.width =
     this.canvas2.width =
     this.canvas3.width =
-    this.canvas4.width = trueWidth
+    this.canvas4.width = trueWidth;
 
     // backing store height
     this.canvas1.height =
@@ -304,7 +304,7 @@ GraphicsManager.prototype.initialize = function() {
     this.ctx4 = this.canvas4.getContext('2d');
 
     this.drawGrid();
-}
+};
 
 /* Clears the gameplay canvases, but not the grid canvas */
 GraphicsManager.prototype.newState = function() {
@@ -312,15 +312,15 @@ GraphicsManager.prototype.newState = function() {
     this.clearNext();
     this.clearStatic();
     this.clearScore();
-}
+};
 
 /* Displays end-game graphics */
 GraphicsManager.prototype.endState = function() {
     this.drawGameOver();
-}
+};
 
 /* Re-renders canvases that have changed */
-GraphicsManager.prototype.render = function(data, delta) {
+GraphicsManager.prototype.render = function(data) {
     if (data.active.dirty) {
         this.clearActive();
         this.drawActive(data.active.data.rotations[data.active.data.rIdx],
@@ -346,36 +346,36 @@ GraphicsManager.prototype.render = function(data, delta) {
         this.drawScore(data.score.data);
         data.score.dirty = false;
     }
-}
+};
 
 /* Clears the active piece */
 GraphicsManager.prototype.clearActive = function() {
     this.clear(this.ctx1, this.gridLeft, this.gridTop,
         this.square*10, this.square*this.height);
-}
+};
 
 /* Clears the next piece */
 GraphicsManager.prototype.clearNext = function() {
     this.clear(this.ctx2, this.nextLeft, this.nextTop,
         this.square*4, this.square*4);
-}
+};
 
 /* Clears the static pieces */
 GraphicsManager.prototype.clearStatic = function() {
     this.clear(this.ctx2, this.gridLeft, this.gridTop,
         this.square*10, this.square*this.height);
-}
+};
 
 /* Clears the score canvas */
 GraphicsManager.prototype.clearScore = function() {
     this.clear(this.ctx4, 0, 0,
         this.canvas4.width, this.canvas4.height);
-}
+};
 
 /* Clears a region of the canvas */
 GraphicsManager.prototype.clear = function(ctx, left, top, width, height) {
     ctx.clearRect(left, top, width, height);
-}
+};
 
 /* Draws the active piece  */
 GraphicsManager.prototype.drawActive = function(frame, relJ, relI) {
@@ -400,7 +400,7 @@ GraphicsManager.prototype.drawActive = function(frame, relJ, relI) {
         }
     }
     this.ctx1.fill();
-}
+};
 
 /* Draws the next piece */
 GraphicsManager.prototype.drawNext = function(frame) {
@@ -419,7 +419,7 @@ GraphicsManager.prototype.drawNext = function(frame) {
         }
     }
     this.ctx2.fill();
-}
+};
 
 /* Draws the static pieces */
 GraphicsManager.prototype.drawStatic = function(grid) {
@@ -441,7 +441,7 @@ GraphicsManager.prototype.drawStatic = function(grid) {
         }
     }
     this.ctx2.fill();
-}
+};
 
 /* Draws the score */
 GraphicsManager.prototype.drawScore = function(data) {
@@ -462,7 +462,7 @@ GraphicsManager.prototype.drawScore = function(data) {
         this.nextLeft,
         this.nextTop+this.square*5 + 28*window.devicePixelRatio,
         this.canvas4.width-this.nextLeft);
-}
+};
 
 /* Draws the background grids */
 GraphicsManager.prototype.drawGrid = function() {
@@ -470,22 +470,22 @@ GraphicsManager.prototype.drawGrid = function() {
 
     this.ctx3.strokeStyle = this.lineColor;
     this.ctx3.lineWidth = this.lineWeight;
-    for (var j = 0; j < this.height-1; j++) {
+    for (let j = 0; j < this.height-1; j++) {
         this.ctx3.moveTo(this.gridLeft, this.gridTop+this.square*(1+j));
         this.ctx3.lineTo(this.gridLeft+this.square*10,
             this.gridTop+this.square*(1+j));
     }
-    for (var i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i++) {
         this.ctx3.moveTo(this.gridLeft+this.square*(1+i), this.gridTop);
         this.ctx3.lineTo(this.gridLeft+this.square*(1+i),
             this.gridTop+this.square*this.height);
     }
-    for (var j = 0; j < 3; j++) {
+    for (let j = 0; j < 3; j++) {
         this.ctx3.moveTo(this.nextLeft, this.nextTop+this.square*(1+j));
         this.ctx3.lineTo(this.nextLeft+this.square*4,
             this.nextTop+this.square*(1+j));
     }
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
         this.ctx3.moveTo(this.nextLeft+this.square*(1+i), this.nextTop);
         this.ctx3.lineTo(this.nextLeft+this.square*(1+i),
             this.nextTop+this.square*4);
@@ -498,7 +498,7 @@ GraphicsManager.prototype.drawGrid = function() {
         this.square*10, this.square*this.height);
     this.ctx3.strokeRect(this.nextLeft, this.nextTop,
         this.square*4, this.square*4);
-}
+};
 
 /* Renders the end-game message */
 GraphicsManager.prototype.drawGameOver = function() {
@@ -510,7 +510,7 @@ GraphicsManager.prototype.drawGameOver = function() {
         this.canvas4.width/2,
         this.canvas4.height/2,
         this.square*10);
-}
+};
 
 module.exports.GraphicsManager = GraphicsManager;
 
@@ -529,7 +529,7 @@ function InputManager() {
 /* Defines the game-related inputs */
 InputManager.prototype.setKeyMap = function(keyMap) {
     this.km = keyMap;
-}
+};
 
 /* Used to register callbacks for game-related events */
 InputManager.prototype.register = function(event, callback) {
@@ -547,12 +547,12 @@ InputManager.prototype.register = function(event, callback) {
             this.pauseGame = callback;
             break;
     }
-}
+};
 
 /* Registers the event filter with the browser. */
 InputManager.prototype.listen = function() {
     document.addEventListener('keydown', this.keyHandler.bind(this));
-}
+};
 
 /* Filter which is used to catch and dispatch game-related events. */
 InputManager.prototype.keyHandler = function(e) {
@@ -579,7 +579,7 @@ InputManager.prototype.keyHandler = function(e) {
             e.preventDefault();
             break;        
     }
-}
+};
 
 module.exports.InputManager = InputManager;
 
@@ -598,7 +598,7 @@ Queue.prototype.push = function(val) {
     if (this.write == this.buffer.length)
         this.grow();
     this.buffer[this.write++] = val;
-}
+};
 
 Queue.prototype.pop = function() {
     if (this.size() == 0) {
@@ -606,21 +606,21 @@ Queue.prototype.pop = function() {
         return undefined; 
     }
     return this.buffer[this.read++];
-}
+};
 
 Queue.prototype.peek = function() {
     if (this.size() == 0)
         return undefined;
     return this.buffer[this.read];
-}
+};
 
 Queue.prototype.size = function() {
     return this.write - this.read;
-}
+};
 
 Queue.prototype.clear = function() {
     this.read = this.write = 0;
-}
+};
 
 Queue.prototype.grow = function() {
     var old = this.buffer;
@@ -630,7 +630,7 @@ Queue.prototype.grow = function() {
         this.buffer[i++] = old[this.read++];
     this.read = 0;
     this.write = i;
-}
+};
 
 module.exports.Queue = Queue;
 
@@ -661,7 +661,7 @@ RandomSack.prototype.pop = function() {
         this.shuffle();
     }
     return this.data[this.top--];
-}
+};
 
 RandomSack.prototype.peek = function() {
     if (this.size() == 0) {
@@ -670,7 +670,7 @@ RandomSack.prototype.peek = function() {
         this.shuffle();
     }
     return this.data[this.top];
-}
+};
 
 RandomSack.prototype.shuffle = function() {
     for (var i = this.data.length-1; i > -1; i--) {
@@ -680,11 +680,11 @@ RandomSack.prototype.shuffle = function() {
         this.data[rand] = temp;
     }
     this.top = this.data.length-1;
-}
+};
 
 RandomSack.prototype.size = function() {
     return this.top + 1;
-}
+};
 
 /*  Internal helper method */
 RandomSack.prototype.build = function(dataSet, freq) {
@@ -695,7 +695,7 @@ RandomSack.prototype.build = function(dataSet, freq) {
         }
     }
     return output;
-}
+};
 
 module.exports.RandomSack = RandomSack;
 
@@ -719,7 +719,7 @@ function Tetris() {
     this.notifyEnd;     // callback to notify engine of ended game
     this.score;         // game score
     this.totalLines;    // total lines cleared
-    this.lines          // line clear accumulator
+    this.lines;         // line clear accumulator
     this.minLines;      // lines to reach next lvl. after, +1 lvl per 10 lines
     this.level;         // scoring level
 
@@ -729,7 +729,7 @@ function Tetris() {
 Tetris.prototype.setConfig = function(config) {
     this.cf = config.tetris;
     this.km = config.keyMap;
-}
+};
 
 /* Registers callbacks for game-related events */
 Tetris.prototype.register = function(event, callback) {
@@ -738,7 +738,7 @@ Tetris.prototype.register = function(event, callback) {
             this.notifyEnd = callback;
             break;
     }
-}
+};
 
 /* One-time set-up */
 Tetris.prototype.initialize = function() {
@@ -752,7 +752,7 @@ Tetris.prototype.initialize = function() {
         static:{data:this.board,dirty:false},
         score:{data:{score:0,lines:0,level:0},dirty:false},
     };
-}
+};
 
 /* Resets all game-state values */
 Tetris.prototype.newState = function() {
@@ -770,12 +770,12 @@ Tetris.prototype.newState = function() {
     this.resetBoard();
     this.loadPieces();
     this.resetDropPeriod();
-}
+};
 
 /* Clean-up duties to perform when ending a game */
 Tetris.prototype.endState = function() {
     this.gameOver = true;
-}
+};
 
 /* Updates the gamestate based on player inputs and elapsed time */
 Tetris.prototype.update = function(moves, delta) {
@@ -787,7 +787,7 @@ Tetris.prototype.update = function(moves, delta) {
         this.moveDown(this.piece1);
         this.accumulator = this.accumulator - this.threshold;
     }
-}
+};
 
 /* Action dispatcher */
 Tetris.prototype.process = function(e) {
@@ -802,7 +802,7 @@ Tetris.prototype.process = function(e) {
             this.moveDown(this.piece1);
             break;
         case this.km.DROP:
-            this.drop(this.piece1);
+            this.drop();
             break;
         case this.km.RTURN:
             this.rotateR(this.piece1);
@@ -811,7 +811,7 @@ Tetris.prototype.process = function(e) {
             this.rotateL(this.piece1);
             break;
     }
-}
+};
 
 /* Try left */
 Tetris.prototype.moveLeft = function(piece) {
@@ -819,7 +819,7 @@ Tetris.prototype.moveLeft = function(piece) {
         piece.i--;
         this.recordPiece1Update();
     }
-}
+};
 
 /* Try right */
 Tetris.prototype.moveRight = function(piece) {
@@ -827,7 +827,7 @@ Tetris.prototype.moveRight = function(piece) {
         piece.i++;
         this.recordPiece1Update();
     }
-}
+};
 
 /* Try down - the only way to lock a piece */
 Tetris.prototype.moveDown = function(piece) {
@@ -844,12 +844,12 @@ Tetris.prototype.moveDown = function(piece) {
             this.notifyEnd();
         }
     }
-}
+};
 
 /* Simulate drop by reducing the drop period */
-Tetris.prototype.drop = function(piece) {
+Tetris.prototype.drop = function() {
     this.threshold = 2;
-}
+};
 
 /* Try CW rotation */
 Tetris.prototype.rotateR = function(piece) {
@@ -857,7 +857,7 @@ Tetris.prototype.rotateR = function(piece) {
         piece.rIdx = piece.getRight();
         this.recordPiece1Update();
     }
-}
+};
 
 /* Try CCW rotation */
 Tetris.prototype.rotateL = function(piece) {
@@ -865,7 +865,7 @@ Tetris.prototype.rotateL = function(piece) {
         piece.rIdx = piece.getLeft();
         this.recordPiece1Update();
     }
-}
+};
 
 /* Collision detection */
 Tetris.prototype.valid = function(j, i, frame, board) {
@@ -878,7 +878,7 @@ Tetris.prototype.valid = function(j, i, frame, board) {
     if((((0x000F & frame) << 12) >>> i) & board[j+3])   // row 4
         return false;
     return true;    
-}
+};
 
 /*  Writes piece to board */
 Tetris.prototype.freeze = function(piece, board) {
@@ -887,7 +887,7 @@ Tetris.prototype.freeze = function(piece, board) {
         board[piece.j+j] |= (((mask&piece.rotations[piece.rIdx])<<(4*j))>>>piece.i);
         mask >>>= 4;
     }
-}
+};
 
 /* Checks if any lines are filled. If so, clear them, and update score. */
 Tetris.prototype.checkForLines = function(board) {
@@ -907,7 +907,7 @@ Tetris.prototype.checkForLines = function(board) {
     }
     if (linesCleared > 0)
         this.updateScore(linesCleared);
-}
+};
 
 /* Updates the score, lines, and level */
 Tetris.prototype.updateScore = function(linesCleared) {
@@ -920,27 +920,27 @@ Tetris.prototype.updateScore = function(linesCleared) {
         this.minLines = 10;
     }
     this.recordScoreUpdate();
-}
+};
 
 /* Calculates # lines needed to reach next lvl. After, +1 lvl per 10 lines */
 Tetris.prototype.getMinLines = function(startLevel) {
-    return Math.min(this.level*10+10,Math.max(100,this.level*10-50));
-}
+    return Math.min(startLevel*10+10,Math.max(100,startLevel*10-50));
+};
 
 /* Invalidates piece1 */
 Tetris.prototype.recordPiece1Update = function() {
     this.data.active.dirty = true;
-}
+};
 
 /* Invalidates piece2 */
 Tetris.prototype.recordPiece2Update = function() {
     this.data.next.dirty = true;
-}
+};
 
 /* Invalidates board */
 Tetris.prototype.recordBoardUpdate = function() {
     this.data.static.dirty = true;
-}
+};
 
 /* Invalidates score */
 Tetris.prototype.recordScoreUpdate = function() {
@@ -948,21 +948,21 @@ Tetris.prototype.recordScoreUpdate = function() {
     this.data.score.data.lines = this.totalLines;
     this.data.score.data.level = this.level;
     this.data.score.dirty = true;
-}
+};
 
 /* Constructs a play-area of 10xheight surrounded by 4 bits of barrier */
 Tetris.prototype.buildBoard = function(height) {
     var board = new Int16Array(new ArrayBuffer(2*(height+8)));
     return board;
-}
+};
 
 /* Clears out the board */
 Tetris.prototype.resetBoard = function() {
-    for (var j = 0; j < this.board.length-4; j++)
+    for (let j = 0; j < this.board.length-4; j++)
         this.board[j] = 2049;   //side walls
-    for (var j = this.board.length-4; j < this.board.length; j++)
+    for (let j = this.board.length-4; j < this.board.length; j++)
         this.board[j] = 4095;   //bottom wall
-}
+};
 
 /* Piece1 <-- Piece2 <-- bag */
 Tetris.prototype.loadPieces = function() {
@@ -979,7 +979,7 @@ Tetris.prototype.loadPieces = function() {
 
     this.recordPiece1Update();
     this.recordPiece2Update();
-}
+};
 
 /* Sets drop period based on level. Capped at level 29 */
 Tetris.prototype.resetDropPeriod = function() {
@@ -1006,7 +1006,7 @@ Tetris.prototype.resetDropPeriod = function() {
             this.threshold = (1/60) * 1000;
             break;
     }
-}
+};
 
 /* 16 bits to represent each 4x4 reference frame */
 Tetris.prototype.SHAPES = [
@@ -1032,17 +1032,17 @@ Tetris.prototype.Piece = function(j, i) {
     this.i = i;                     // 0 --> max from left-to-right
     this.rIdx = 0;                  // current index in the rotation array
     this.rotations;                 // an array of reference frames
-}
+};
 
 /* Returns the rIdx corresponding to a CW rotation */
 Tetris.prototype.Piece.prototype.getRight = function() {
     return this.rIdx == this.rotations.length-1 ? 0 : this.rIdx + 1;
-}
+};
 
 /* Returns the rIdx corresponding to a CCW rotation */
 Tetris.prototype.Piece.prototype.getLeft = function() {
     return this.rIdx == 0 ? this.rotations.length-1 : this.rIdx - 1;
-}
+};
 
 module.exports.Tetris = Tetris;
 
