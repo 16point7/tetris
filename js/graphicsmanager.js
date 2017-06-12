@@ -73,7 +73,7 @@ GraphicsManager.prototype.initialize = function() {
     this.canvas1.style.zIndex = 1;
     this.canvas2.style.zIndex = 2;
     this.canvas3.style.zIndex = 3;
-    this.canvas4.style.zIndex = 4;
+    this.canvas4.style.zIndex = 4;  
 
     this.container.appendChild(this.canvas1);
     this.container.appendChild(this.canvas2);
@@ -240,6 +240,10 @@ GraphicsManager.prototype.drawScore = function(data) {
         this.nextLeft,
         this.nextTop+this.square*5 + 14*window.devicePixelRatio,
         this.canvas4.width-this.nextLeft);
+    this.ctx4.fillText('Level: ' + data.level,
+        this.nextLeft,
+        this.nextTop+this.square*5 + 28*window.devicePixelRatio,
+        this.canvas4.width-this.nextLeft);
 }
 
 /* Draws the background grids */
@@ -286,5 +290,6 @@ GraphicsManager.prototype.drawGameOver = function() {
     this.ctx4.fillStyle = '#b71c1c';
     this.ctx4.fillText('GAME OVER',
         this.canvas4.width/2,
-        this.canvas4.height/2);
+        this.canvas4.height/2,
+        this.square*10);
 }

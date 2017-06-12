@@ -11,7 +11,11 @@ function Tetris() {
     this.gameOver;      // boolean
     this.notifyEnd;     // callback to notify engine of ended game
     this.score;         // game score
-    this.lines;         // lines cleared
+    this.totalLines;    // total lines cleared
+    this.lines          // line clear accumulator
+    this.minLines;      // lines to reach next lvl. after, +1 lvl per 10 lines
+    this.level;         // scoring level
+
 }
 
 /* Stores the default configurations */
@@ -39,22 +43,26 @@ Tetris.prototype.initialize = function() {
         active:{data:this.piece1,dirty:false},
         next:{data:this.piece2,dirty:false},
         static:{data:this.board,dirty:false},
-        score:{data:{score:0,lines:0},dirty:false},
+        score:{data:{score:0,lines:0,level:0},dirty:false},
     };
 }
 
 /* Resets all game-state values */
 Tetris.prototype.newState = function() {
+    this.gameOver = false;
+    this.accumulator = 0;
+    this.score = 0;
+    this.totalLines = 0;
+    this.lines = 0;
+    this.level = this.cf.startLevel;
+    this.minLines = this.getMinLines(this.level);
+    this.data.score.data.score = this.score;
+    this.data.score.data.lines = this.totalLines;
+    this.data.score.data.level = this.level;
+    this.data.score.dirty = true;
     this.resetBoard();
     this.loadPieces();
-    this.accumulator = 0;
-    this.threshold = this.cf.dropPeriod;
-    this.score = 0;
-    this.lines = 0;
-    this.data.score.data.score = this.score;
-    this.data.score.data.lines = this.lines;
-    this.data.score.dirty = true;
-    this.gameOver = false;
+    this.resetDropPeriod();
 }
 
 /* Clean-up duties to perform when ending a game */
@@ -67,7 +75,6 @@ Tetris.prototype.update = function(moves, delta) {
     while(!this.gameOver && moves.size() > 0) {
         this.process(moves.pop());        
     }
-
     this.accumulator = this.accumulator + delta;
     while (!this.gameOver && (this.accumulator > this.threshold)) {
         this.moveDown(this.piece1);
@@ -134,7 +141,7 @@ Tetris.prototype.moveDown = function(piece) {
 
 /* Simulate drop by reducing the drop period */
 Tetris.prototype.drop = function(piece) {
-    this.threshold = 25;
+    this.threshold = 2;
 }
 
 /* Try CW rotation */
@@ -195,32 +202,44 @@ Tetris.prototype.checkForLines = function(board) {
         this.updateScore(linesCleared);
 }
 
-/* Updates the score based on level */
+/* Updates the score, lines, and level */
 Tetris.prototype.updateScore = function(linesCleared) {
-    this.score += linesCleared*100; // just for now
+    this.score += this.scoring[linesCleared-1]*(this.level+1);
+    this.totalLines += linesCleared;
     this.lines += linesCleared;
+    while (this.lines >= this.minLines) {
+        this.level++;
+        this.lines -= this.minLines;
+        this.minLines = 10;
+    }
     this.recordScoreUpdate();
 }
 
-/* Invalidate piece1 */
+/* Calculates # lines needed to reach next lvl. After, +1 lvl per 10 lines */
+Tetris.prototype.getMinLines = function(startLevel) {
+    return Math.min(this.level*10+10,Math.max(100,this.level*10-50));
+}
+
+/* Invalidates piece1 */
 Tetris.prototype.recordPiece1Update = function() {
     this.data.active.dirty = true;
 }
 
-/* Invalidate piece2 */
+/* Invalidates piece2 */
 Tetris.prototype.recordPiece2Update = function() {
     this.data.next.dirty = true;
 }
 
-/* Invalidate board */
+/* Invalidates board */
 Tetris.prototype.recordBoardUpdate = function() {
     this.data.static.dirty = true;
 }
 
-/* Invalidate score */
+/* Invalidates score */
 Tetris.prototype.recordScoreUpdate = function() {
     this.data.score.data.score = this.score;
-    this.data.score.data.lines = this.lines;
+    this.data.score.data.lines = this.totalLines;
+    this.data.score.data.level = this.level;
     this.data.score.dirty = true;
 }
 
@@ -255,8 +274,31 @@ Tetris.prototype.loadPieces = function() {
     this.recordPiece2Update();
 }
 
+/* Sets drop period based on level. Capped at level 29 */
 Tetris.prototype.resetDropPeriod = function() {
-    this.threshold = this.cf.dropPeriod     // scale with level in future
+    switch(true) {
+        case this.level < 8:
+            this.threshold = ((48-this.level*5)/60) * 1000;
+            break;
+        case this.level < 10:
+            this.threshold = ((8-(this.level-8)*2)/60) * 1000;
+            break;
+        case this.level < 13:
+            this.threshold = (5/60) * 1000;
+            break;
+        case this.level < 16:
+            this.threshold = (4/60) * 1000;
+            break;
+        case this.level < 19:
+            this.threshold = (3/60) * 1000;
+            break;
+        case this.level < 29:
+            this.threshold = (2/60) * 1000;
+            break;
+        default:
+            this.threshold = (1/60) * 1000;
+            break;
+    }
 }
 
 /* 16 bits to represent each 4x4 reference frame */
@@ -273,6 +315,9 @@ Tetris.prototype.SHAPES = [
 /* Default start location */
 Tetris.prototype.START_J = 0;
 Tetris.prototype.START_I = 8;
+
+/* Scoring System */
+Tetris.prototype.scoring = [40,100,300,1200];
 
 /* Inner-class */
 Tetris.prototype.Piece = function(j, i) {
