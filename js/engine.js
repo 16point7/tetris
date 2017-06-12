@@ -4,9 +4,15 @@ function Engine(InputManager, GraphicsManager, Tetris, Queue, config) {
     this.tt = new Tetris();
     this.cf = config;
     this.moves = new Queue(32);
+<<<<<<< HEAD
     this.activeGame;                    // boolean
     this.loopId;                        // id of a running loop
     this.prev;                          // start time of the previous frame
+=======
+    this.activeGame;        // boolean
+    this.loopId;            // id of a running loop
+    this.prev;              // start time of the previous frame
+>>>>>>> fb8c206d3314a86f092248650b2b3338fa31a86b
 
     this.setup();
 }
