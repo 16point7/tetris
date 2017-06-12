@@ -13,12 +13,17 @@ window.onload = function() {
                 QUIT:81
             },
         containerId:'zone',
+        lineColor:'#7986cb',
+        fillColor:'#1a237e',
+        borderColor:'#1a237e',
+        borderWeight:8,
+        lineWeight:1,
         tetris: 
             {
-                dropPeriod: 250,
                 pieceFreq: 2,
-                height: 20
-            }           
+                height: 20,
+                startLevel:8
+            }
     };
 
     window.game = new Engine(InputManager, GraphicsManager, Tetris, Queue, config);
