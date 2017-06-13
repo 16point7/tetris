@@ -4,5 +4,9 @@
   "devDependencies": {
     "eslint": "^4.0.0",
     "webpack": "^2.6.1"
+  },
+  "scripts": {
+    "lint": "eslint js/src/*.js",
+    "build": "webpack"
   }
 }
