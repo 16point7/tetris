@@ -79,8 +79,8 @@ Tetris.prototype.update = function(moves, delta) {
     }
     this.accumulator = this.accumulator + delta;
     while (!this.gameOver && (this.accumulator > this.threshold)) {
-        this.moveDown(this.piece1);
         this.accumulator = this.accumulator - this.threshold;
+        this.moveDown(this.piece1);
     }
 };
 
