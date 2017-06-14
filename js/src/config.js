@@ -13,7 +13,7 @@ module.exports = {
     tetris: {
         pieceFreq: 2,
         height: 20,
-        startLevel:8
+        startLevel:5
     },
     containerId:'zone',
     lineColor:'#7986cb',

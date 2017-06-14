@@ -202,7 +202,7 @@ module.exports = {
     tetris: {
         pieceFreq: 2,
         height: 20,
-        startLevel:8
+        startLevel:5
     },
     containerId:'zone',
     lineColor:'#7986cb',
@@ -282,6 +282,16 @@ GraphicsManager.prototype.initialize = function() {
     this.canvas2.height =
     this.canvas3.height =
     this.canvas4.height = this.square * (Math.max(this.height+2,6));
+
+    this.canvas1.style.width =
+    this.canvas2.style.width =
+    this.canvas3.style.width =
+    this.canvas4.style.width = (this.canvas4.width/window.devicePixelRatio) + 'px';
+
+    this.canvas1.style.height =
+    this.canvas2.style.height =
+    this.canvas3.style.height =
+    this.canvas4.style.height = (this.canvas4.height/window.devicePixelRatio) + 'px';
 
     this.canvas1.style.position =
     this.canvas2.style.position =
@@ -784,8 +794,8 @@ Tetris.prototype.update = function(moves, delta) {
     }
     this.accumulator = this.accumulator + delta;
     while (!this.gameOver && (this.accumulator > this.threshold)) {
-        this.moveDown(this.piece1);
         this.accumulator = this.accumulator - this.threshold;
+        this.moveDown(this.piece1);
     }
 };
 
