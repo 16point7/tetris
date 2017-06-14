@@ -65,6 +65,16 @@ GraphicsManager.prototype.initialize = function() {
     this.canvas3.height =
     this.canvas4.height = this.square * (Math.max(this.height+2,6));
 
+    this.canvas1.style.width =
+    this.canvas2.style.width =
+    this.canvas3.style.width =
+    this.canvas4.style.width = (this.canvas4.width/window.devicePixelRatio) + 'px';
+
+    this.canvas1.style.height =
+    this.canvas2.style.height =
+    this.canvas3.style.height =
+    this.canvas4.style.height = (this.canvas4.height/window.devicePixelRatio) + 'px';
+
     this.canvas1.style.position =
     this.canvas2.style.position =
     this.canvas3.style.position =
