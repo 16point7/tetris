@@ -8,11 +8,13 @@ v1.0
 Clone the repository and open bin/index.html in a web browser.
 
 ## How to Play
-* N = New Game
+* N: new
+* Q: quit
+* P: pause
 * Left, Right, Down
-* Space = Drop
-* Up = CW rotation
-* Z = CCW rotation
+* Space: drop
+* Up: CW rotation
+* Z: CCW rotation
 
 ## Implementation Details
 Pieces are represented as 16-bit integers.
