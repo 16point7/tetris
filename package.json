@@ -11,6 +11,5 @@
   "scripts": {
     "lint": "eslint src/*.js",
     "build": "webpack"
-  },
-  "dependencies": {}
+  }
 }

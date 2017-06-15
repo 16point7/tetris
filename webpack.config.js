@@ -10,7 +10,7 @@ module.exports = {
         filename: 'app.bundle.js'
     },
     plugins: [
-	    new UglifyJSPlugin({
+        new UglifyJSPlugin({
             comments: false
         }),
         new HtmlWebpackPlugin({
@@ -23,7 +23,7 @@ module.exports = {
             }
         }),
         new ScriptExtHtmlWebpackPlugin({
-            inline: 'app.bundle'
+            inline: 'app.bundle.js'
         })
     ]
 }
