@@ -42,7 +42,7 @@ Pieces are bound by a 4x4 frame of reference. Below is the zeroth rotation, <cod
  */
  ```
 
- The board is represented as an array of 16-bit integers. The default play zone is 20 lines. The spawn zone and bottom wall are 4 lines each. This equates to a default board array length of 28.
+ The board is represented as an array of 16-bit integers. The default play zone is 20 lines. The spawn zone and bottom wall are 4 lines each. This equates to a default board array length of 28. The play zone and game zone are 10 bits wide and are surrounded by 1 bit of wall on each side.
  ```javascript
  var board = Tetris.prototype.buildBoard(20);
  board.length == 28 // true
