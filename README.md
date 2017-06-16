@@ -5,20 +5,21 @@ A lightweight implementation of Classic Tetris
 v1.0
 
 ## Installation
-Clone the repository and open bin/index.html in a web browser.
+Clone the repository and run bin/index.html in a web browser.
 
 ## How to Play
-* N: new
-* Q: quit
-* P: pause
-* Left, Right, Down
-* Space: drop
-* Up: CW rotation
-* Z: CCW rotation
+* **new:** KeyN
+* **quit:** KeyQ
+* **pause:** KeyP
+* **left:** ArrowLeft
+* **right:** ArrowRight
+* **down:** ArrownDown
+* **drop:** Space
+* **rotate right:** ArrowUp
+* **rotate left:** KeyZ
 
 ## Implementation Details
-Pieces are represented as 16-bit integers.
-
+Pieces are represented by 16-bit integers. Each piece has 4 rotations.
 ```javascript
 Tetris.prototype.SHAPES = [
     [0x00F0, 0x2222, 0x00F0, 0x2222],   // shape-I
@@ -29,7 +30,10 @@ Tetris.prototype.SHAPES = [
     [0x0C60, 0x2640, 0x0C60, 0x2640],   // shape-Z
     [0x0660, 0x0660, 0x0660, 0x0660]    // shape-O
 ];
+```
 
+Pieces are bound by a 4x4 frame of reference. Below is the zeroth rotation, <code>rIdx = 0</code>, of shape-T.
+```javascript
 /*
  * 0000
  * 1110
@@ -37,9 +41,10 @@ Tetris.prototype.SHAPES = [
  * 0000
  */
  ```
- The board is represented as an array of twenty 16-bit integers.
+
+ The board is represented as an array of 16-bit integers. The default play zone is 20 lines. The spawn zone and bottom wall are 4 lines each. This equates to a default board array length of 28.
  ```javascript
- var board = Tetris.prototype.buildBoard(20);   // 4 lines spawn zone, 20 lines play, 4 lines bottom wall
+ var board = Tetris.prototype.buildBoard(20);
  board.length == 28 // true
  board[0] == 2049   // true
  board[27] == 4095  // true
@@ -53,12 +58,11 @@ Tetris.prototype.SHAPES = [
   * 0000111111111111    // board[27]
   */
 ```
-<code>i</code> and <code>j</code> describe position of the piece relative to the board.
+<code>i</code> and <code>j</code> describe the position of a piece relative to the board. It is the relative coordinate of the left-most bit on row 1 of the piece's frame of reference. <code>i = 0</code> is the 16th bit of a board row. All pieces spawn at <code>i = 8, j = 0</code>.
 
-Collision detection is a bit-wise <code>&</code> between board and piece rows.
-
+Collision detection is a bit-wise <code>&</code> between the board and piece rows.
 ```javascript
-var frame = 0x0E40; // Tetris.prototype.SHAPES[3][0]
+var frame = 0x0E40; // rIdx = 0 of shape-T
 
 if(((0xF000 & frame ) >>> i ) & board[j])           // row 1
     return false;
@@ -70,8 +74,8 @@ if((((0x000F & frame) << 12) >>> i) & board[j+3])   // row 4
     return false;
 return true;    
 ```
-Commiting piece to board is a bit-wise <code>|</code> between board and piece rows.
 
+Commiting a piece to the board is a bit-wise <code>|</code> between the board and piece rows.
 ```javascript
 var mask = 0xF000;
 for (var j = 0; j < 4; j++) {
@@ -79,18 +83,17 @@ for (var j = 0; j < 4; j++) {
   mask >>>= 4;
 }
 ```
-Checking if a row is filled or empty is also simple.
-
+Checking if a row is filled or empty is simple.
 ```javascript
 if (board[j] == 4095)   // filled
 if (board[j] == 2049)   // empty
 ```
-Game is rendered by 3 <code>canvas</code> layers. Only the layer that has changed is re-rendered.
+Game graphics are represented by 3 <code>canvas</code> layers. To eliminate unecesary painting, only the layer that has changed is re-rendered.
 * layer 1: board and grid lines
 * layer 2: active piece
 * layer 3: frozen pieces and next piece
 
-Pieces are made "fair" by drawing from a grab-bag. This guarantees that every piece will be drawn at least once every 7 times (assuming piece frequency is 1). Piece frequency is 2 by defeault and can be configured. See <code>RandomSack</code> for implementation details.
+Pieces are made "fair" by drawing from a grab-bag. This guarantees that every piece will be drawn at least once every 7 times (assuming piece frequency is set to 1). By default, piece frequency is set to 2, but it can be adjusted in the configuration. See <code>RandomSack</code> for implementation details.
 
 ## v2.0 Roadmap
 
