@@ -1,0 +1,83 @@
+/* Positioning Styles */
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+    width:100%;
+}
+body {
+    position: absolute;            
+    font-size:1vmin;
+}        
+.page {
+    display:none;
+    height:100%;
+    width:100%;
+}
+.page-title {
+    display:table;
+    width:100%;
+    padding-top:10vh;
+}
+.title-large {
+    font-size:18em;
+}
+.title-medium {
+    font-size:10em;  
+}
+.page-body {
+    width:100%;
+    margin-top:8vh;
+    margin-left:auto;
+    margin-right:auto;
+}
+.btn {            
+    display:table;
+    width:50vmin;
+    margin-top:3vh;
+    margin-bottom:3vh;
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:1.5vh;
+    padding-bottom:1.5vh;
+    border-radius:5vmin;
+    font-size:5em;
+}
+.text {
+    display:table-cell;
+    text-align:center;
+    vertical-align:middle;
+    
+}
+.show {
+    display:block;
+    z-index:100;
+}
+.options-list{
+    width:90vmin;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:5em;
+}
+.option {
+    width:100%;
+}
+.option-title {
+    width:50%;
+    text-align:left;
+}
+.option-choice {
+    text-align:center;
+    padding:0.25em;
+}
+.option-input {
+    text-align:center;
+    padding:0.25em;
+}
+.option-inputbox {
+    width:100%;
+    font-size:1em;
+    padding-left:0.25em;
+    outline:none;
+    text-align:center;
+}

@@ -2,28 +2,124 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tetris v1.0</title>
-    <style>
-        body {
-            font-family:monospace;
-            background-color:#e8eaf6;
-            color:#1a237e;
+    <link rel="stylesheet" type="text/css" href="../style/base.css">
+    <link id="dark1" rel="stylesheet" type="text/css" href="../style/themes.css">
+    <script>
+        window.onload = function() {
+            window.activePage = document.getElementById('menu');
+            window.addEventListener('keypress', function(e){
+                switch(e.key) {
+                    case '1':
+                        document.body.classList.remove(document.body.classList[0]);
+                        document.body.classList.add('theme1');
+                        break;
+                    case '2':
+                        document.body.classList.remove(document.body.classList[0]);
+                        document.body.classList.add('theme2');
+                        break;
+                    case '3':
+                        document.body.classList.remove(document.body.classList[0]);
+                        document.body.classList.add('theme3');
+                        break;
+                    case '4':
+                        document.body.classList.remove(document.body.classList[0]);
+                        document.body.classList.add('theme4');
+                        break;
+                    case '5':
+                        window.activePage.classList.toggle('show');
+                        window.activePage = document.getElementById('menu');
+                        window.activePage.classList.toggle('show');
+                        break;
+                    case '6':
+                        window.activePage.classList.toggle('show');
+                        window.activePage = document.getElementById('game');
+                        window.activePage.classList.toggle('show');
+                        break;
+                    case '7':
+                        window.activePage.classList.toggle('show');
+                        window.activePage = document.getElementById('options');
+                        window.activePage.classList.toggle('show');
+                        break;
+                    case '8':
+                        window.activePage.classList.toggle('show');
+                        window.activePage = document.getElementById('high-scores');
+                        window.activePage.classList.toggle('show');
+                        break;75
+                           break;
+                    case '9':
+                        window.activePage.classList.toggle('show');
+                        window.activePage = document.getElementById('credits');
+                        window.activePage.classList.toggle('show');
+                        break;
+                    case '0':
+                        window.activePage.classList.toggle('show');
+                        window.activePage = document.getElementById('paused');
+                        window.activePage.classList.toggle('show');
+                        break;
+                }
+            });
         }
-        h1, p {
-            text-align:center;
-        }
-        a {
-            text-decoration:none;
-        }
-        #zone {
-            width:50%;
-            margin:auto;
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <h1>Tetris</h1>
-    <p>v1.0 (<a href="https://github.com/16point7/tetris/tree/v1.0" target="_blank">source</a>)</p>
-    <div id="zone"></div>
+<body class="theme1">
+    <div id="menu" class="page show">
+        <div class="page-title title-large"><div class="text">Tetris</div></div>
+        <div class="page-body">
+            <div class="btn"><div class="text">New Game</div></div>
+            <div class="btn"><div class="text">Resume Game</div></div>
+            <div class="btn"><div class="text">Options</div></div>
+            <div class="btn"><div class="text">High Scores</div></div>
+            <div class="btn"><div class="text">Credits</div></div>
+        </div>
+        
+    </div>
+    <div id="game" class="page">
+        <div class="page-title title-medium"><div class="text">Game</div></div> 
+        <canvas id="grid" class="board"></canvas>
+        <canvas id="active" class="board"></canvas>
+        <canvas id="static" class="board"></canvas>
+        <canvas id="next"></canvas>
+    </div>
+    <div id="options" class="page">
+        <div class="page-title title-medium"><div class="text">Options</div></div> 
+            <div class="page-body">
+                <table class="options-list">
+                    <tr class="option">
+                        <td class="option-title">Theme</td>
+                        <td class="option-choice">1</td>
+                        <td class="option-choice">2</td>
+                        <td class="option-choice">3</td>
+                        <td class="option-choice">4</td>
+                    </tr>
+                    <tr class="option">
+                        <td class="option-title">Level (0-29)</td>
+                        <td class="option-input" colspan="4">    
+                            <input class="option-inputbox" type="text" maxlength="2">
+                        </td>
+                    </tr>
+                    <tr class="option">
+                        <td class="option-title">Music</td>
+                        <td class="option-choice" colspan="2">Off</td>
+                        <td class="option-choice" colspan="2">On</td>
+                    </tr>
+                </table>
+            </div>
+    </div>
+    <div id="high-scores" class="page">
+        <div class="page-title title-medium"><div class="text">High Scores</div></div> 
+    </div>
+    <div id="credits" class="page">
+        <div class="page-title title-medium"><div class="text">Credits</div></div> 
+    </div>
+    <div id="paused" class="page">        
+        <div class="page-title title-medium"><div class="text">Paused!</div></div>        
+        <div class="page-body">
+            <div class="btn"><div class="text">Resume</div></div>
+            <div class="btn"><div class="text">Options</div></div>
+            <div class="btn"><div class="text">Quit</div></div>       
+        </div>
+    </div>
 </body>
 </html>
