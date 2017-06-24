@@ -1,45 +1,40 @@
 function GraphicsManager() {
-    this.container;     // DOM element which houses the canvases
-    this.height;        // # of cells
-    this.square;        // width of cell in physical pixels (pp)
-    this.space;         // distance between adjacent cells in pp
-    this.squarespace;   // length of square + space in pp
-    this.nSquare;       // width of cell in physical pp (next grid)
-    this.nSpace;        // ditance between adjacent cells in pp (next grid)
-    this.nSquareSpace;  // length of nSquare + nSpace in pp (next grid)
-    this.activeLeft;    // pos of active pc rel coord left boundary in pp
-    this.activeTop;     // pos of active pc rel coord top boundary in pp
-    this.staticLeft;    // pos of grid left boundary in pp
-    this.staticTop;     // pos of grid top boundary in pp
-    this.nextLeft;      // pos of next pc left boundary in pp
-    this.nextTop;       // pos of next pc top boundary in pp
-    this.canvas1;       // active piece canvas
-    this.canvas2;       // static pieces
-    this.canvas3;       // grid canvas
-    this.canvas4;       // next piece
-    this.canvas5;       // next grid
-    this.ctx1;          // 2D context
+    this.height;            // # of cells
+    this.space;             // space btwn adjcnt cells in phsyical pixels (pp)
+    this.square;            // width of cell in pp
+    this.squarespace;       // length of square + space in pp
+    this.nSpace;            // space btwn adjcnt cells in pp (next grid)
+    this.nSquare;           // width of cell in pp (next grid)
+    this.nSquareSpace;      // length of nSquare + nSpace in pp (next grid)
+    this.activeTop;         // pos of active pc rel coord top boundary in pp
+    this.activeLeft;        // pos of active pc rel coord left boundary in pp
+    this.staticTop;         // pos of grid top boundary in pp
+    this.staticLeft;        // pos of grid left boundary in pp
+    this.nextTop;           // pos of next pc top boundary in pp
+    this.nextLeft;          // pos of next pc left boundary in pp
+    this.canvas1;           // active piece canvas
+    this.canvas2;           // static pieces canvas
+    this.canvas3;           // grid canvas
+    this.canvas4;           // next piece canvas
+    this.canvas5;           // next piece grid canvas
+    this.ctx1;              // 2D contexts
     this.ctx2;
     this.ctx3;
     this.ctx4;
     this.ctx5;
-    this.output1;       // text field for score
-    this.output2;       // text field for lines
-    this.output3;       // text field for level
-    this.lineWeight;
-    this.themes;        // color themes
-    this.lineColor;
-    this.activeFillColor;
-    this.staticFillColor;
+    this.output1;           // text field for score
+    this.output2;           // text field for lines
+    this.output3;           // text field for level
+    this.themes;            // color themes
 }
 
 /* Stores the default configurations */
 GraphicsManager.prototype.setConfig = function(config) {
-    this.container = document.getElementById(config.containerId);
     this.height = config.tetris.height;
     this.themes = config.themes;
 };
 
+/* One-time initialization */
 GraphicsManager.prototype.initialize = function() {
     this.cacheOutputs();
     this.setCanvasDimensions();
@@ -47,15 +42,13 @@ GraphicsManager.prototype.initialize = function() {
     this.drawGrid();
 };
 
+/* Applies color themes to all canvas ctx */
 GraphicsManager.prototype.setThemeStyles = function(option) {
-    this.lineColor = this.themes[option].lineColor;
-    this.activeFillColor = this.themes[option].activeFillColor;
-    this.staticFillColor = this.themes[option].staticFillColor;
-    this.ctx1.fillStyle = this.activeFillColor;
-    this.ctx2.fillStyle = this.staticFillColor;
-    this.ctx4.fillStyle = this.staticFillColor;
-    this.ctx3.strokeStyle = this.lineColor;
-    this.ctx5.strokeStyle = this.lineColor;
+    this.ctx1.fillStyle = this.themes[option].activeFillColor;
+    this.ctx2.fillStyle = this.themes[option].staticFillColor;
+    this.ctx4.fillStyle = this.themes[option].staticFillColor;
+    this.ctx3.strokeStyle = this.themes[option].lineColor;
+    this.ctx5.strokeStyle = this.themes[option].lineColor;
     this.ctx3.lineWidth = 1;
     this.ctx5.lineWidth = 1;
 }
@@ -72,7 +65,7 @@ GraphicsManager.prototype.cacheOutputs = function () {
     this.output3 = document.getElementById('level');
 }
 
-/* Sets the canvas dimensions based on screen dimensions and pixelRatio */
+/* Sets the canvas dimensions based on DPR and CSS height */
 GraphicsManager.prototype.setCanvasDimensions = function() {
     var gridHeight = this.canvas1.clientHeight * window.devicePixelRatio;
     this.space = gridHeight / (5*this.height);
@@ -84,10 +77,10 @@ GraphicsManager.prototype.setCanvasDimensions = function() {
     this.canvas2.height =
     this.canvas3.height =
     this.canvas1.height = this.height * this.squarespace;
-    this.activeLeft = 0.5*this.space - 5*this.squarespace;
     this.activeTop = 0.5*this.space - 4*this.squarespace;
-    this.staticLeft = 0.5*this.space;
+    this.activeLeft = 0.5*this.space - 5*this.squarespace;
     this.staticTop = 0.5*this.space - 4*this.squarespace;
+    this.staticLeft = 0.5*this.space;
     this.ctx1 = this.canvas1.getContext('2d');
     this.ctx2 = this.canvas2.getContext('2d');
     this.ctx3 = this.canvas3.getContext('2d');
@@ -100,8 +93,8 @@ GraphicsManager.prototype.setCanvasDimensions = function() {
     this.canvas5.width =
     this.canvas4.height =
     this.canvas5.height = 4 * this.nSquareSpace;
-    this.nextLeft =
-    this.nextTop = 0.5*this.nSpace;
+    this.nextTop =
+    this.nextLeft = 0.5*this.nSpace;
     this.ctx4 = this.canvas4.getContext('2d');
     this.ctx5 = this.canvas5.getContext('2d');
 }
