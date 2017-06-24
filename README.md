@@ -2,12 +2,12 @@
 A lightweight implementation of Classic Tetris
 
 ## Current Version
-v1.0
-
-<img src="https://raw.githubusercontent.com/16point7/tetris/master/screenshots/v1.0.png" width="200px">
+v2.0
 
 ## Installation
-Clone the repository and run bin/index.html in a web browser.
+1. Clone the repository
+2. Execute <code>npm run build</code>
+3. Open <code>bin/index.html</code> in browser.
 
 ## How to Play
 * **new:** KeyN
@@ -98,7 +98,6 @@ Game graphics are represented by 3 <code>canvas</code> layers. To eliminate unec
 Pieces are made "fair" by drawing from a grab-bag. This guarantees that every piece will be drawn at least once every 7 times (assuming piece frequency is set to 1). By default, piece frequency is set to 2, but it can be adjusted in the configuration. See <code>RandomSack</code> for implementation details.
 
 ## v2.0 Roadmap
-
 * menu screen
 * local storage
 * music
