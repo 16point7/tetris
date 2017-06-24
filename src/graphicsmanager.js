@@ -178,7 +178,7 @@ GraphicsManager.prototype.drawActive = function(frame, relJ, relI) {
         }
         for (var i = 0; i < 4; i++) {
             var absI = i + relI;
-            if (absI > 4 && (mask & frame)) {
+            if (mask & frame) {
                 this.ctx1.rect(this.activeLeft+this.squarespace*absI,
                     this.activeTop+this.squarespace*absJ,
                     this.square,
