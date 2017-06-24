@@ -1,6 +1,6 @@
 /* Theme 1 */
 .theme1 {
-    background-image:url('../images/dark1.png');
+    background-image:url("../images/dark1.png");
     background-repeat:repeat;
     font-family:monospace;
 }
@@ -55,7 +55,7 @@
 
 /* Theme 2 */
 .theme2 {
-    background-image:url('../images/dark2.png');
+    background-image:url("../images/dark2.png");
     background-repeat:repeat;
     font-family:monospace;
 }
@@ -110,7 +110,7 @@
 
 /* Theme 3 */
 .theme3 {
-    background-image:url('../images/color1.png');
+    background-image:url("../images/color1.png");
     background-repeat:repeat;
     font-family:monospace;
 }
@@ -165,7 +165,7 @@
 
 /* Theme 4 */
 .theme4 {
-    background-image:url('../images/light1.png');
+    background-image:url("../images/light1.png");
     background-repeat:repeat;
     font-family:monospace;
 }
