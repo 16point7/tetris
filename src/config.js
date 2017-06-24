@@ -16,9 +16,27 @@ module.exports = {
         startLevel:5
     },
     containerId:'zone',
-    lineColor:'#7986cb',
-    fillColor:'#1a237e',
-    borderColor:'#1a237e',
-    borderWeight:8,
-    lineWeight:1
+    lineWeight:1,
+    themes: [
+        {
+            lineColor: 'rgba(255,255,255,0.25)',
+            activeFillColor:'rgba(255,255,255,0.25)',
+            staticFillColor:'rgba(255,255,255,0.5)'
+        },
+        {
+            lineColor: 'rgba(255,255,255,0.25)',
+            activeFillColor:'rgba(255,255,255,0.25)',
+            staticFillColor:'rgba(255,255,255,0.5)'
+        },
+        {
+            lineColor: 'rgba(255,255,255,0.25)',
+            activeFillColor:'rgba(255,255,255,0.25)',
+            staticFillColor:'rgba(255,255,255,0.5)'
+        },
+        {
+            lineColor: 'rgba(255,255,255,0.25)',
+            activeFillColor:'rgba(255,255,255,0.25)',
+            staticFillColor:'rgba(255,255,255,0.5)'
+        }
+    ]
 };
