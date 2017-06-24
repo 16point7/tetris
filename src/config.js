@@ -15,7 +15,6 @@ module.exports = {
         height: 20 ,
         startLevel:5
     },
-    containerId:'zone',
     themes: [
         {
             lineColor: 'rgba(255,255,255,0.25)',
