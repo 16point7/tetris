@@ -12,11 +12,10 @@ module.exports = {
     },
     tetris: {
         pieceFreq: 2,
-        height: 20,
+        height: 20 ,
         startLevel:5
     },
     containerId:'zone',
-    lineWeight:1,
     themes: [
         {
             lineColor: 'rgba(255,255,255,0.25)',

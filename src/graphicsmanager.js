@@ -37,7 +37,6 @@ function GraphicsManager() {
 GraphicsManager.prototype.setConfig = function(config) {
     this.container = document.getElementById(config.containerId);
     this.height = config.tetris.height;
-    this.lineWeight = config.lineWeight;
     this.themes = config.themes;
 };
 
@@ -53,12 +52,12 @@ GraphicsManager.prototype.setThemeStyles = function(option) {
     this.activeFillColor = this.themes[option].activeFillColor;
     this.staticFillColor = this.themes[option].staticFillColor;
     this.ctx1.fillStyle = this.activeFillColor;
-    this.ctx4.fillStyle = this.staticFillColor;
     this.ctx2.fillStyle = this.staticFillColor;
+    this.ctx4.fillStyle = this.staticFillColor;
     this.ctx3.strokeStyle = this.lineColor;
-    this.ctx3.lineWidth = this.lineWeight;
     this.ctx5.strokeStyle = this.lineColor;
-    this.ctx5.lineWidth = this.lineWeight;
+    this.ctx3.lineWidth = 1;
+    this.ctx5.lineWidth = 1;
 }
 
 /* Finds and stores references to the outputs */
