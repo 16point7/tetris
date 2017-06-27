@@ -7,7 +7,7 @@ v1.0
 <img src="https://raw.githubusercontent.com/16point7/tetris/master/screenshots/v1.0.png" width="200px">
 
 ## Installation
-Clone the repository and run bin/index.html in a web browser.
+Clone the repository and run bin/index.html in a web browser, or play [here](https://rawgit.com/16point7/tetris/master/bin/index.html).
 
 ## How to Play
 * **new:** KeyN
