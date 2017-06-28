@@ -97,8 +97,18 @@ Game graphics are represented by 3 <code>canvas</code> layers. To eliminate unec
 
 Pieces are made "fair" by drawing from a grab-bag. This guarantees that every piece will be drawn at least once every 7 times (assuming piece frequency is set to 1). By default, piece frequency is set to 2, but it can be adjusted in the configuration. See <code>RandomSack</code> for implementation details.
 
-## v2.0 Roadmap
+## Runtime Performance
+* **CPU:** i5 6200U 2.3 GHz
+* **RAM:** 16 GB
+* **OS:** Ubuntu 16.04 
+* **Browser:** Chromium v58.0.3029.110 (64-bit)
+* **Test duration:** ~ 60s
 
+<img src="https://github.com/16point7/tetris/blob/v1.0/screenshots/tetris-v1-performance1.png?raw=true" width="200px">
+
+<img src="https://github.com/16point7/tetris/blob/v1.0/screenshots/tetris-v1-performance2.png?raw=true" width="200px">
+
+## v2.0 Roadmap
 * menu screen
 * local storage
 * music
