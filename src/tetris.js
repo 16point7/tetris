@@ -65,6 +65,7 @@ Tetris.prototype.newState = function() {
     this.data.score.data.level = this.level;
     this.data.score.dirty = true;
     this.levelSelect.blur();
+    this.levelSelect.disabled = true;
     this.resetBoard();
     this.loadPieces();
     this.resetDropPeriod();
@@ -73,6 +74,7 @@ Tetris.prototype.newState = function() {
 /* Clean-up duties to perform when ending a game */
 Tetris.prototype.endState = function() {
     this.gameOver = true;
+    this.levelSelect.disabled = false;
 };
 
 /* Updates the gamestate based on player inputs and elapsed time */
