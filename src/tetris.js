@@ -17,6 +17,7 @@ function Tetris() {
     this.lines;         // line clear accumulator
     this.minLines;      // lines to reach next lvl. after, +1 lvl per 10 lines
     this.level;         // scoring level
+    this.levelSelect;   // level-selection list
 
 }
 
@@ -47,6 +48,7 @@ Tetris.prototype.initialize = function() {
         static:{data:this.board,dirty:false},
         score:{data:{score:0,lines:0,level:0},dirty:false},
     };
+    this.setupLevels();
 };
 
 /* Resets all game-state values */
@@ -56,12 +58,13 @@ Tetris.prototype.newState = function() {
     this.score = 0;
     this.totalLines = 0;
     this.lines = 0;
-    this.level = this.cf.startLevel;
+    this.level = parseInt(this.levelSelect.value);
     this.minLines = this.getMinLines(this.level);
     this.data.score.data.score = this.score;
     this.data.score.data.lines = this.totalLines;
     this.data.score.data.level = this.level;
     this.data.score.dirty = true;
+    this.levelSelect.blur();
     this.resetBoard();
     this.loadPieces();
     this.resetDropPeriod();
@@ -300,6 +303,17 @@ Tetris.prototype.resetDropPeriod = function() {
         default:
             this.threshold = (1/60) * 1000;
             break;
+    }
+};
+
+/* Builds drop down list for level selction */
+Tetris.prototype.setupLevels = function() {
+    this.levelSelect = document.getElementById('levels');
+    for (var i = 0; i < 30; i++) {
+        var option = document.createElement('option');
+        option.text = 'level: ' + i;
+        option.value = i;
+        this.levelSelect.appendChild(option);
     }
 };
 
