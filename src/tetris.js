@@ -80,7 +80,7 @@ Tetris.prototype.endState = function() {
 /* Updates the gamestate based on player inputs and elapsed time */
 Tetris.prototype.update = function(moves, delta) {
     while(!this.gameOver && moves.size() > 0) {
-        this.process(moves.pop());        
+        this.process(moves.poll());        
     }
     this.accumulator = this.accumulator + delta;
     while (!this.gameOver && (this.accumulator > this.threshold)) {

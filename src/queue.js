@@ -5,13 +5,13 @@ function Queue(initialSize) {
     this.write = 0;
 }
 
-Queue.prototype.push = function(val) {
+Queue.prototype.offer = function(val) {
     if (this.write == this.buffer.length)
         this.grow();
     this.buffer[this.write++] = val;
 };
 
-Queue.prototype.pop = function() {
+Queue.prototype.poll = function() {
     if (this.size() == 0) {
         this.clear();
         return undefined; 

@@ -48,7 +48,7 @@ Engine.prototype.loop = function(time) {
 /* Callback for action events */
 Engine.prototype.action = function(e) {    
     if (this.loopId != null)
-        this.moves.push(e);
+        this.moves.offer(e);
 };
 
 /* Callback for new game event */
