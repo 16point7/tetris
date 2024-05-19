@@ -4,7 +4,7 @@ A lightweight implementation of Classic Tetris
 ## Current Version
 v1.0
 
-<img src="https://raw.githubusercontent.com/16point7/tetris/master/screenshots/v1.0.png" width="200px">
+<img src="./screenshots/v1.0.png" width="200px">
 
 ## Installation
 Clone the repository and run bin/index.html in a web browser, or play [here](https://s3.amazonaws.com/atang150-github-demos/tetris/index.html).
@@ -104,9 +104,9 @@ Pieces are made "fair" by drawing from a grab-bag. This guarantees that every pi
 * **Browser:** Chromium v58.0.3029.110 (64-bit)
 * **Test duration:** ~ 60s
 
-<img src="https://github.com/16point7/tetris/blob/v1.0/screenshots/tetris-v1-performance1.png?raw=true" width="200px">
+<img src="./screenshots/tetris-v1-performance1.png" width="200px">
 
-<img src="https://github.com/16point7/tetris/blob/v1.0/screenshots/tetris-v1-performance2.png?raw=true" width="200px">
+<img src="./screenshots/tetris-v1-performance2.png" width="200px">
 
 ## v2.0 Roadmap
 * menu screen
